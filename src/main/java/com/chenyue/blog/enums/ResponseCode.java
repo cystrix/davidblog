@@ -15,4 +15,8 @@ public enum ResponseCode {
         this.code = code;
         this.message = message;
     }
+
+    public ResponseCode OK(){
+        return ResponseCode.OK;
+    }
 }
