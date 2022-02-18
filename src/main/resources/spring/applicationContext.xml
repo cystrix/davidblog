@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       https://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc
+        https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <context:property-placeholder location="classpath:db.properties"/>
+
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${driver-class-name}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="initialSize" value="${druid.initial-size}"/>
+        <property name="maxActive" value="${druid.max-active}"/>
+        <property name="minIdle" value="${druid.min-idle}"/>
+        <property name="maxWait" value="${druid.max-wait}"/>
+        <property name="timeBetweenEvictionRunsMillis" value="${druid.time-between-eviction-runs-millis}"/>
+        <property name="minEvictableIdleTimeMillis" value="${druid.min-evictable-idle-time-millis}"/>
+        <property name="testOnBorrow" value="${druid.test-on-borrow}"/>
+        <property name="testOnReturn" value="${druid.test-on-return}"/>
+        <property name="testWhileIdle" value="${druid.test-while-idle}"/>
+        <property name="validationQuery" value="${druid.validation-query}"/>
+        <property name="validationQueryTimeout" value="${druid.validation-query-timeout}"/>
+        <property name="keepAlive" value="${druid.keep-alive}"/>
+        <property name="removeAbandoned" value="${druid.remove-abandoned}"/>
+        <property name="removeAbandonedTimeout" value="${druid.remove-abandoned-timeout}"/>
+        <property name="logAbandoned" value="${druid.log-abandoned}"/>
+        <property name="filters" value="${druid.filters}"/>
+        <property name="useGlobalDataSourceStat" value="${druid.use-global-data-source-stat}"/>
+        <property name="poolPreparedStatements" value="${druid.preparedStatement}"/>
+        <property name="maxOpenPreparedStatements" value="${druid.maxOpenPreparedStatements}"/>
+    </bean>
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="mapperLocations" value="classpath:mapper/*Mapper.xml" />
+        <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
+    </bean>
+
+    <!-- spring 整合mybatis-->
+    <bean  class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <property name="basePackage" value="com.chenyue.dao"/>
+    </bean>
+
+<!--    <mvc:default-servlet-handler/>-->
+    <!--freemarker -->
+    <!-- 注册freemarker配置类 -->
+    <bean id="freeMarkerConfigurer" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <!-- ftl模版文件路径  -->
+        <property name="templateLoaderPath" value="/WEB-INF/view/"></property>
+        <!-- 页面编码 -->
+        <property name="defaultEncoding" value="utf-8" />
+        <property name="freemarkerSettings">
+            <props>
+                <!-- 模版缓存刷新时间，不写单位默认为秒 -->
+                <prop key="template_update_delay">0</prop>
+                <!-- 时区 和 时间格式化 -->
+                <prop key="locale">zh_CN</prop>
+                <prop key="datetime_format">yyyy-MM-dd</prop>
+                <prop key="date_format">yyyy-MM-dd</prop>
+                <!-- 数字使用.来分隔 -->
+                <prop key="number_format">#.##</prop>
+            </props>
+        </property>
+    </bean>
+    <!-- 注册freemarker视图解析器 -->
+    <bean id="freeMarkerViewResolver"
+          class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <!-- 视图解析顺序，排在其他视图解析器之后 数字越大优先级越低 -->
+        <property name="order" value="2" />
+        <!-- 开启模版缓存 -->
+        <property name="cache" value="true" />
+        <!-- 上面已经配了，这里就不用配啦 -->
+        <property name="prefix" value="" />
+        <!-- 配置文件后缀 -->
+        <property name="suffix" value=".ftl" />
+        <property name="contentType" value="text/html;charset=UTF-8" />
+        <!-- 是否允许session属性覆盖模型数据,默认false -->
+        <property name="allowSessionOverride" value="false" />
+        <!-- 是否允许request属性覆盖模型数据,默认false -->
+        <property name="allowRequestOverride" value="false" />
+        <!-- 开启spring提供的宏帮助(macro) -->
+        <property name="exposeSpringMacroHelpers" value="true" />
+        <!-- 添加request attributes属性到ModelAndView中 -->
+        <property name="exposeRequestAttributes" value="true" />
+        <!-- 添加session attributes属性到ModelAndView中 -->
+        <property name="exposeSessionAttributes" value="true" />
+    </bean>
+</beans>
