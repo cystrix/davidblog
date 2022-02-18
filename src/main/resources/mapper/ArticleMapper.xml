@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.chenyue.blog.dao.ArticleDao">
-    <sql id="tb">`article`</sql>
+    <sql id="tb">article</sql>
     <sql id="baseColumns">article, article_user_id,</sql>
     <insert id="insert" parameterType="com.chenyue.blog.entity.Article" useGeneratedKeys="true" keyProperty="id" >
     </insert>

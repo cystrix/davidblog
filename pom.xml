@@ -21,6 +21,7 @@
     </properties>
 
     <dependencies>
+        <!--mvn dependency:resolve -Dclassifier=sources下载项目依赖源码-->
         <!--freemarker模板引擎-->
         <!-- https://mvnrepository.com/artifact/org.freemarker/freemarker -->
         <dependency>
@@ -35,13 +36,6 @@
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>3.1.0</version>
-        </dependency>
-        <!-- 添加sevlet支持 -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
-            <scope>provided</scope>
         </dependency>
         <!-- 添加jsp支持 -->
         <dependency>

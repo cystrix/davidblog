@@ -46,51 +46,9 @@
     <!-- spring 整合mybatis-->
     <bean  class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
-        <property name="basePackage" value="com.chenyue.dao"/>
+        <property name="basePackage" value="com.chenyue.blog.dao"/>
     </bean>
 
 <!--    <mvc:default-servlet-handler/>-->
-    <!--freemarker -->
-    <!-- 注册freemarker配置类 -->
-    <bean id="freeMarkerConfigurer" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-        <!-- ftl模版文件路径  -->
-        <property name="templateLoaderPath" value="/WEB-INF/view/"></property>
-        <!-- 页面编码 -->
-        <property name="defaultEncoding" value="utf-8" />
-        <property name="freemarkerSettings">
-            <props>
-                <!-- 模版缓存刷新时间，不写单位默认为秒 -->
-                <prop key="template_update_delay">0</prop>
-                <!-- 时区 和 时间格式化 -->
-                <prop key="locale">zh_CN</prop>
-                <prop key="datetime_format">yyyy-MM-dd</prop>
-                <prop key="date_format">yyyy-MM-dd</prop>
-                <!-- 数字使用.来分隔 -->
-                <prop key="number_format">#.##</prop>
-            </props>
-        </property>
-    </bean>
-    <!-- 注册freemarker视图解析器 -->
-    <bean id="freeMarkerViewResolver"
-          class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
-        <!-- 视图解析顺序，排在其他视图解析器之后 数字越大优先级越低 -->
-        <property name="order" value="2" />
-        <!-- 开启模版缓存 -->
-        <property name="cache" value="true" />
-        <!-- 上面已经配了，这里就不用配啦 -->
-        <property name="prefix" value="" />
-        <!-- 配置文件后缀 -->
-        <property name="suffix" value=".ftl" />
-        <property name="contentType" value="text/html;charset=UTF-8" />
-        <!-- 是否允许session属性覆盖模型数据,默认false -->
-        <property name="allowSessionOverride" value="false" />
-        <!-- 是否允许request属性覆盖模型数据,默认false -->
-        <property name="allowRequestOverride" value="false" />
-        <!-- 开启spring提供的宏帮助(macro) -->
-        <property name="exposeSpringMacroHelpers" value="true" />
-        <!-- 添加request attributes属性到ModelAndView中 -->
-        <property name="exposeRequestAttributes" value="true" />
-        <!-- 添加session attributes属性到ModelAndView中 -->
-        <property name="exposeSessionAttributes" value="true" />
-    </bean>
+
 </beans>

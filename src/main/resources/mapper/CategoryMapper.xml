@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chenyue.blog.dao.CategoryDao">
+    <sql id="tb">category</sql>
+    <sql id="baseColumns">category_id,category_pid,category_name,category_description,category_order,category_icon</sql>
+
+    <select id="queryCategoryById" parameterType="integer" resultType="com.chenyue.blog.entity.Category">
+        SELECT <include refid="baseColumns"/> FROM <include refid="tb"/> WHERE category_id = #{value}
+    </select>
+</mapper>

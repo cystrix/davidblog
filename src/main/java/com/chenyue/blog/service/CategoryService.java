@@ -1,4 +1,4 @@
-package com.chenyue.blog.dao;
+package com.chenyue.blog.service;
 
 import com.chenyue.blog.entity.Category;
 
@@ -7,7 +7,6 @@ import com.chenyue.blog.entity.Category;
  * @date 2022/2/18
  * @description:
  */
-public interface CategoryDao {
-
-    Category queryCategoryById(Integer id);
+public interface CategoryService {
+    Category getCategoryById(Integer id);
 }

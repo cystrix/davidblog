@@ -10,7 +10,7 @@
        http://www.springframework.org/schema/mvc
        https://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-    <context:component-scan base-package="com.chenyue"></context:component-scan>
+    <context:component-scan base-package="com.chenyue.blog"></context:component-scan>
     <mvc:annotation-driven/><!--开json，将对象返回类型转化成json字符串返回-->
 
     <import resource="classpath:spring/applicationContext.xml"/>

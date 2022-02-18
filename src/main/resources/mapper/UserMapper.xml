@@ -3,12 +3,12 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.chenyue.blog.dao.UserDao">
-    <sql id="tb">`user`</sql>
-    <sql id="baseColumns">id,stu_name,stu_no,gender,age,email,create_time, update_time, is_delete</sql>
+    <sql id="tb">user</sql>
+    <sql id="baseColumns"></sql>
     <insert id="insert" parameterType="com.chenyue.blog.entity.User" useGeneratedKeys="true" keyProperty="id" >
-        INSERT INTO <include refid="tb"/>(<include refid="baseColumns"/>)
-        VALUE (NULL,#{stuName},#{stuNo},#{gender},#{age},#{email},#{createTime}, #{updateTime}, #{isDelete})
     </insert>
+
+
     <!--<update id="update" parameterType="com.chenyue.entity.User">
         UPDATE <include refid="tb"/>
         <set>
@@ -31,7 +31,4 @@
         WHERE id = #{id}
     </update>-->
 
-  <!--  <update id="deleteById" parameterType="int">
-        UPDATE  <include refid="tb"/> SET is_delete = 1 WHERE id = #{id}
-    </update>-->
 </mapper>
