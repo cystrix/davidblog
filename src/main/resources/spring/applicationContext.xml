@@ -49,6 +49,13 @@
         <property name="basePackage" value="com.chenyue.blog.dao"/>
     </bean>
 
-<!--    <mvc:default-servlet-handler/>-->
 
+    <bean id="tokenAuthInterceptor" class="com.chenyue.blog.conf.jwt.interceptor.TokenAuthInterceptor"></bean>
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/admin/**"/>
+            <mvc:exclude-mapping path="/admin/user/login"/>
+            <ref bean="tokenAuthInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>

@@ -3,5 +3,38 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.chenyue.blog.dao.ArticleCategoryDao">
+    <sql id="tb">article_category</sql>
+    <sql id="baseColumns">id,article_id,category_id</sql>
 
+    <insert id="insert" parameterType="com.chenyue.blog.entity.ArticleCategory">
+        INSERTinclud<include refid="tb"/>(<include refid="baseColumns"/>) VALUE (NULL,#{articleId},#{categoryId})
+    </insert>
+
+    <delete id="deleteByCategoryId" parameterType="integer">
+        DELETE FROM <include refid="tb"/> WHERE category_id = #{categoryId}
+    </delete>
+
+    <delete id="deleteByArticleId" parameterType="integer">
+        DELETE FROM <include refid="tb"/> WHERE category_id = #{articleId}
+    </delete>
+
+    <select id="countArticleByCategoryId" parameterType="integer"  resultType="integer">
+        SELECT COUNT(*) FROM <include refid="tb"/> WHERE category_id = #{category_id}
+    </select>
+
+    <select id="listCategoryIdByArticleId" parameterType="integer" resultType="integer">
+        SELECT category_id FROM <include refid="baseColumns"/> WHERE article_id = #{articleId}
+    </select>
+
+    <select id="listArticleIdByCategoryId" parameterType="integer" resultType="integer">
+        SELECT article_id FROM <include refid="tb"/> WHERE category_id = #{categoryId}
+    </select>
+
+    <select id="listCategoryByArticleId" parameterType="integer" resultType="com.chenyue.blog.entity.Category">
+        SELECT c.*
+        FROM category AS c
+        JOIN article_category AS ac
+        ON c.category_id = ac.category_id
+        WHERE ac.article_id = #{articleId}
+    </select>
 </mapper>

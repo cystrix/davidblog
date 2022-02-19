@@ -3,5 +3,35 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.chenyue.blog.dao.TagDao">
-
+    <sql id="tb">tag</sql>
+    <sql id="baseColumns">tag_id,tag_name,tag_description</sql>
+    <insert id="insert" parameterType="com.chenyue.blog.entity.Tag" keyProperty="tag_id" useGeneratedKeys="true">
+        INSERT INTO tag(tag_name,tag_description) VALUE (#{tagName},#{tagDescription})
+    </insert>
+    <insert id="update" parameterType="com.chenyue.blog.entity.Tag">
+        update tag
+        <set>
+            <if test="tagName != null and tagName.length() > 0">
+                tag_name = #{tagName}
+            </if>
+            <if test="tagDescription != null and tagDescription.length() > 0">
+                tag_description = #{tagDescription}
+            </if>
+        </set>
+    </insert>
+    <delete id="deleteById" parameterType="integer">
+        DELETE FROM tag WHERE tag_id = #{tagId}
+    </delete>
+    <select id="getTagById" parameterType="integer" resultType="com.chenyue.blog.entity.Tag">
+        SELECT * FROM tag WHERE tag_id = #{tagId}
+    </select>
+    <select id="getTagByName" parameterType="string" resultType="com.chenyue.blog.entity.Tag">
+        SELECT * FROM tag WHERE  tag_name = #{tagName}
+    </select>
+    <select id="countTag" resultType="integer">
+        SELECT COUNT(*) FROM tag
+    </select>
+    <select id="listAllTag" parameterType="integer" resultType="com.chenyue.blog.entity.Tag">
+        SELECT * FROM tag
+    </select>
 </mapper>

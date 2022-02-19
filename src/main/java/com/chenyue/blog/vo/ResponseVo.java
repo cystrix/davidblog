@@ -5,6 +5,11 @@ public class ResponseVo <T>{
     private String message;
     private T data;
 
+    public ResponseVo(Integer code, String message) {
+        this.code = code;
+        this.message = message;
+
+    }
     public ResponseVo(Integer code, String message, T data) {
         this.code = code;
         this.message = message;

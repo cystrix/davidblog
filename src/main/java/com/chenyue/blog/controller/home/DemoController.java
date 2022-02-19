@@ -1,4 +1,4 @@
-package com.chenyue.blog.controller;
+package com.chenyue.blog.controller.home;
 
 import com.chenyue.blog.enums.CodeEnum;
 import com.chenyue.blog.service.CategoryService;
