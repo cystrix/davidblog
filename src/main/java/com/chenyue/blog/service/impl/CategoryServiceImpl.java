@@ -5,7 +5,6 @@ import com.chenyue.blog.entity.Category;
 import com.chenyue.blog.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 /**
  * @author chenyue7@foxmail.com
@@ -21,6 +20,6 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category getCategoryById(Integer id) {
-        return categoryDao.queryCategoryById(id);
+        return categoryDao.getCategoryById(id);
     }
 }

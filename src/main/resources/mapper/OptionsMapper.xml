@@ -3,5 +3,58 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.chenyue.blog.dao.OptionsDao">
+    <sql id="tb">options</sql>
+    <sql id="baseColumns">
+        option_id,option_site_title,option_site_description, option_meta_description,option_meta_keyword,
+        option_aboutsite_avatar,option_aboutsite_content,option_aboutsite_content,option_aboutsite_github,
+        option_aboutsite_weibo,option_tongji,option_status
+    </sql>
 
+    <insert id="insert" parameterType="options" useGeneratedKeys="true" keyProperty="options_id">
+        INSERT INTO <include refid="tb"/>
+        (<include refid="baseColumns"/>)
+        VALUE (NULL, #{optionSiteTitle},
+        #{optionSiteDescrption},
+        #{optionMetaDescrption}, #{optionMetaKeyword},
+        #{optionAboutsiteAvatar}, #{optionAboutsiteTitle},
+        #{optionAboutsiteContent}, #{optionAboutsiteWechat},
+        #{optionAboutsiteQq}, #{optionAboutsiteGithub},
+        #{optionAboutsiteWeibo}, #{optionTongji}, #{optionStatus}
+        )
+    </insert>
+
+    <update id="update" parameterType="options">
+        UPDATE
+        <include refid="tb"/>
+        <set>
+            <if test="optionSiteTitle != null">option_site_title = #{optionSiteTitle},</if>
+            <if test="optionSiteDescrption != null">option_site_descrption = #{optionSiteDescrption},</if>
+            <if test="optionMetaDescrption != null">option_meta_descrption = #{optionMetaDescrption},</if>
+            <if test="optionMetaKeyword != null">option_meta_keyword = #{optionMetaKeyword},</if>
+            <if test="optionAboutsiteAvatar != null">option_aboutsite_avatar = #{optionAboutsiteAvatar},</if>
+            <if test="optionAboutsiteTitle != null">option_aboutsite_title = #{optionAboutsiteTitle},</if>
+            <if test="optionAboutsiteContent != null">option_aboutsite_content = #{optionAboutsiteContent},</if>
+            <if test="optionAboutsiteWechat != null">option_aboutsite_wechat = #{optionAboutsiteWechat},</if>
+            <if test="optionAboutsiteQq != null">option_aboutsite_qq = #{optionAboutsiteQq},</if>
+            <if test="optionAboutsiteGithub != null">option_aboutsite_github = #{optionAboutsiteGithub},</if>
+            <if test="optionAboutsiteWeibo != null">option_aboutsite_weibo = #{optionAboutsiteWeibo},</if>
+            <if test="optionTongji != null">option_tongji = #{optionTongji},</if>
+            <if test="optionStatus != null">option_status = #{optionStatus}</if>
+        </set>
+        WHERE option_id = #{optionId}
+    </update>
+
+    <delete id="deleteById" parameterType="integer">
+        DELETE FROM <include refid="tb"/> WHERE options_id = #{value}
+    </delete>
+
+    <select id="getOptionsById" parameterType="integer" resultType="options">
+        SELECT <include refid="baseColumns"/> WHERE options_id = #{vaalue}
+    </select>
+
+    <select id="getOptions" resultType="options">
+        SELECT * FROM
+        <include refid="tb"/>
+        limit 1
+    </select>
 </mapper>

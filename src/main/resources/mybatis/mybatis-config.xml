@@ -13,6 +13,6 @@
     </settings>
 
     <typeAliases>
-        <package name="com.chenyue.entity"/>
+        <package name="com.chenyue.blog.entity"/>
     </typeAliases>
 </configuration>

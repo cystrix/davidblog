@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -20,7 +21,7 @@ public class Article {
     private Integer articleLikeCount;
     private Integer articleIsComment;
     private Integer articleOrder;
-    private Date articleCreateTime;
-    private Date articleUpdateTime;
+    private LocalDateTime articleCreateTime;
+    private LocalDateTime articleUpdateTime;
     private Integer articleStatus;
 }

@@ -3,14 +3,20 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
        https://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/mvc
-        https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+        https://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd">
 
-    <context:property-placeholder location="classpath:db.properties"/>
+    <context:property-placeholder location="classpath:config.properties"/>
 
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
         <property name="driverClassName" value="${driver-class-name}"/>
@@ -37,6 +43,7 @@
         <property name="poolPreparedStatements" value="${druid.preparedStatement}"/>
         <property name="maxOpenPreparedStatements" value="${druid.maxOpenPreparedStatements}"/>
     </bean>
+
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="mapperLocations" value="classpath:mapper/*Mapper.xml" />
@@ -49,7 +56,7 @@
         <property name="basePackage" value="com.chenyue.blog.dao"/>
     </bean>
 
-
+    <!--token interceptor-->
     <bean id="tokenAuthInterceptor" class="com.chenyue.blog.conf.jwt.interceptor.TokenAuthInterceptor"></bean>
     <mvc:interceptors>
         <mvc:interceptor>

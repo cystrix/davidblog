@@ -6,7 +6,46 @@
     <sql id="tb">category</sql>
     <sql id="baseColumns">category_id,category_pid,category_name,category_description,category_order,category_icon</sql>
 
-    <select id="queryCategoryById" parameterType="integer" resultType="com.chenyue.blog.entity.Category">
+    <select id="getCategoryById" parameterType="integer" resultType="com.chenyue.blog.entity.Category">
         SELECT <include refid="baseColumns"/> FROM <include refid="tb"/> WHERE category_id = #{value}
+    </select>
+
+    <insert id="insert" parameterType="com.chenyue.blog.entity.Category" keyProperty="category_id" useGeneratedKeys="true">
+        INSERT INTO <include refid="tb"></include> (<include refid="baseColumns"></include>)
+        VALUE(NULL, #{categoryPid},#{categoryName},#{categoryDescription},#{categoryOrder},#{categoryIcon})
+    </insert>
+    <update id="update" parameterType="com.chenyue.blog.entity.Category">
+        UPDATE
+        <include refid="tb"></include>
+        <set>
+            <if test="categoryPid != null">category_pid = #{categoryPid}</if>
+            <if test="categoryName != null">category_name = #{categoryName}</if>
+            <if test="categoryDescription != null">category_description = #{categoryDescription}</if>
+            <if test="categoryOrder != null">category_order = #{categoryOrder}</if>
+            <if test="categoryIcon != null">category_Icon = #{categoryIcon}</if>
+        </set>
+        WHERE category_id = #{categoryId}
+    </update>
+
+    <select id="getCategoryByName" parameterType="string" resultType="com.chenyue.blog.entity.Category">
+        SELECT <include refid="baseColumns"></include> FROM <include refid="tb"></include> WHERE category_name = #{categoryName}
+    </select>
+
+    <delete id="deleteCategoryById" parameterType="integer">
+        DELETE FROM <include refid="tb"></include> WHERE category_id = #{categoryId}
+    </delete>
+
+    <select id="countCategory" resultType="integer">
+        SELECT COUNT(*) FROM <include refid="tb"></include>
+    </select>
+
+    <select id="listCategory" resultType="com.chenyue.blog.entity.Category">
+        SELECT <include refid="baseColumns"></include> FROM <include refid="tb"></include>
+    </select>
+
+    <select id="listChildCategory" resultType="com.chenyue.blog.entity.Category">
+        SELECT <include refid="baseColumns"></include>
+        FROM <include refid="tb"></include>
+        WHERE category_pid = #{categoryPid}
     </select>
 </mapper>

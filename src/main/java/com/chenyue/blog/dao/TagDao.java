@@ -1,6 +1,7 @@
 package com.chenyue.blog.dao;
 
 import com.chenyue.blog.entity.Tag;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -9,6 +10,7 @@ import java.util.List;
  * @date 2022/2/18
  * @description:
  */
+@Repository
 public interface TagDao {
     int insert(Tag tag);
     int update(Tag tag);
@@ -17,5 +19,5 @@ public interface TagDao {
     Tag getTagById(Integer id);
     Tag getTagByName(String name);
     Integer countTag();
-    List<Tag> listAllTag();
+    List<Tag> listTag();
 }

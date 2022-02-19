@@ -4,31 +4,73 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.chenyue.blog.dao.UserDao">
     <sql id="tb">user</sql>
-    <sql id="baseColumns"></sql>
-    <insert id="insert" parameterType="com.chenyue.blog.entity.User" useGeneratedKeys="true" keyProperty="id" >
+    <sql id="baseColumns">
+        user_id,user_name,user_pass,user_nickname,user_email,user_url,user_avatar,
+        user_last_login_ip,user_register_time,user_last_login_time,user_status
+    </sql>
+
+
+    <insert id="insert" parameterType="com.chenyue.blog.entity.User" useGeneratedKeys="true" keyProperty="userId" >
+        INSERT INTO <include refid="tb"></include> (<include refid="baseColumns"></include>)
+        VALUE (NULL,#{userName},#{userPass},#{userNickname},#{userEmail},#{userUrl},#{userAvatar},
+            #{userLastLoginIp},#{userRegisterTime},#{userLastLoginTime},#{userStatus})
     </insert>
 
+    <select id="getUserById" parameterType="integer" resultType="com.chenyue.blog.entity.User">
+        SELECT <include refid="baseColumns"></include> FROM <include refid="tb"></include> WHERE user_id = #{userId}
+    </select>
 
-    <!--<update id="update" parameterType="com.chenyue.entity.User">
+    <update id="update" parameterType="com.chenyue.blog.entity.User">
         UPDATE <include refid="tb"/>
         <set>
-            <if test="username != null and username.length() > 0">
-                username = #{username},
-            </if>
-            <if test="password != null and password.length() > 0">
-                password = #{password},
-            </if>
-            <if test="email != null and email.length() > 0">
-                email = #{email},
-            </if>
-            <if test="birthday != null">
-                birthday = #{birthday},
-            </if>
-            <if test="gender != null">
-                gender = #{gender}
-            </if>
+            <if test="userName != null">user_name = #{userName},</if>
+            <if test="userPass != null">user_pass = #{userPass},</if>
+            <if test="userNickname != null">user_nickname = #{userNickname},</if>
+            <if test="userEmail != null">user_email = #{userEmail},</if>
+            <if test="userUrl != null">user_url = #{userUrl},</if>
+            <if test="userAvatar != null">user_avatar = #{userAvatar},</if>
+            <if test="userLastLoginIp != null">user_last_login_ip = #{userLastLoginIp},</if>
+            <if test="userRegisterTime != null">user_register_time = #{userRegisterTime},</if>
+            <if test="userLastLoginTime != null">user_last_login_time = #{userLastLoginTime},</if>
+            <if test="userStatus != null">user_status = #{userStatus},</if>
         </set>
-        WHERE id = #{id}
-    </update>-->
+        WHERE user_id = #{userId}
+    </update>
+
+    <select id="getUserByNameOrEmail" parameterType="string" resultType="com.chenyue.blog.entity.User">
+        SELECT <include refid="baseColumns"></include> FROM <include refid="tb"></include>
+        WHERE (user_name = #{value} OR user_email = #{value}) AND user_status > 0
+    </select>
+
+    <delete id="deleteById" parameterType="integer">
+        DELETE FROM <include refid="tb"></include> WHERE user_id = #{value}
+    </delete>
+
+    <select id="listUser" resultType="com.chenyue.blog.entity.User">
+        SELECT <include refid="baseColumns"></include> FROM <include refid="tb"></include>
+    </select>
+
+    <select id="getUserByName" parameterType="string" resultType="com.chenyue.blog.entity.User">
+        SELECT <include refid="baseColumns"></include> FROM <include refid="tb"></include>
+        WHERE user_name = #{value} LIMIT 1
+    </select>
+
+    <select id="getUserByEmail" parameterType="string" resultType="com.chenyue.blog.entity.User">
+        SELECT <include refid="baseColumns"></include> FROM <include refid="tb"></include>
+        WHERE user_email = #{value} LIMIT 1
+    </select>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </mapper>

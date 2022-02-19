@@ -2,6 +2,7 @@ package com.chenyue.blog.entity;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -17,8 +18,8 @@ public class Link {
     private String linkDescription;
     private String linkOwnerNickname;
     private String linkOwnerContact;
-    private Date linkCreateTime;
-    private Date linkUpdateTime;
+    private LocalDateTime linkCreateTime;
+    private LocalDateTime linkUpdateTime;
     private Integer linkOrder;
     private Integer linkStatus;
 }

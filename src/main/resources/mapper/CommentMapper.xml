@@ -3,5 +3,65 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.chenyue.blog.dao.CommentDao">
+    <sql id="tb">comment</sql>
+    <sql id="baseColumns">
+        comment_id,comment_pid,comment_pname,comment_article_id,comment_author_name,
+        comment_author_email,comment_author_url,comment_author_avatar,comment_content,
+        comment_agent,comment_ip,comment_create_time,comment_role
+    </sql>
 
+    <insert id="insert" parameterType="com.chenyue.blog.entity.Comment">
+        INSERT INTO <include refid="tb"></include> (<include refid="baseColumns"></include>)
+        VALUE (NULL, #{commentPid},#{commentPname},#{commentArticleId},#{commentAuthorName},#{commentAuthorEmail},
+            #{commentAuthorUrl},#{commentAuthorAvatar},#{commentContent},#{commentAgent},#{commentIp},#{commentCreateTime},
+            #{commentRole})
+    </insert>
+    <delete id="deleteById" parameterType="integer">
+        DELETE FROM <include refid="tb"></include> WHERE comment_id = #{value}
+    </delete>
+    <update id="update" parameterType="com.chenyue.blog.entity.Comment">
+        UPDATE <include refid="tb"/>
+        <set>
+            <if test="commentPid != null">comment_pid = #{commentPid},</if>
+            <if test="commentPname != null">comment_pname = #{commentPname},</if>
+            <if test="commentArticleId != null">comment_article_id = #{commentArticleId},</if>
+            <if test="commentAuthorName != null">comment_author_name = #{commentAuthorName},</if>
+            <if test="commentAuthorEmail != null">comment_author_email = #{commentAuthorEmail},</if>
+            <if test="commentAuthorUrl != null">comment_author_url = #{commentAuthorUrl},</if>
+            <if test="commentContent != null">comment_content = #{commentContent},</if>
+            <if test="commentAgent != null">comment_agent = #{commentAgent},</if>
+            <if test="commentIp != null">comment_ip = #{commentIp},</if>
+            <if test="commentCreateTime != null">comment_create_time = #{commentCreateTime},</if>
+            <if test="commentAuthorAvatar != null">comment_author_avatar = #{commentAuthorAvatar},</if>
+            <if test="commentRole != null">comment_role = #{commentRole},</if>
+        </set>
+    </update>
+
+    <select id="getCommentById" resultType="com.chenyue.blog.entity.Comment" parameterType="integer">
+        SELECT <include refid="baseColumns"></include> FROM <include refid="tb"></include>
+        WHERE comment_id = #{commentId}
+    </select>
+
+    <select id="listCommentByArticleId" parameterType="integer" resultType="com.chenyue.blog.entity.Comment">
+        SELECT <include refid="baseColumns"></include> FROM <include refid="tb"></include>
+        WHERE comment_article_id = #{id}
+    </select>
+
+    <select id="listComment" resultType="com.chenyue.blog.entity.Comment">
+        SELECT <include refid="baseColumns"></include> FROM <include refid="tb"></include>
+    </select>
+
+    <select id="countComment" resultType="integer">
+        SELECT COUNT(*) FROM <include refid="tb"></include>
+    </select>
+
+    <select id="listRecentComment"  parameterType="integer" resultType="comment" >
+        SELECT <include refid="baseColumns"></include> FROM <include refid="tb"></include> WHERE comment_role = 0
+        ORDER BY comment_id DESC LIMIT #{value}
+    </select>
+
+    <select id="listChildComment" parameterType="integer" resultType="comment">
+        SELECT <include refid="baseColumns"></include> FROM <include refid="tb"></include>
+        WHERE comment_pid = #{value}
+    </select>
 </mapper>

@@ -2,6 +2,37 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.chenyue.blog.dao.LinkDao">
+<mapper namespace="com.chenyue.blog.dao.MenuDao">
+    <sql id="tb">menu</sql>
+    <sql id="baseColumns">menu_id,menu_name,menu_url,menu_menu_level,menu_icon,menu_order</sql>
 
+    <insert id="insert" parameterType="com.chenyue.blog.entity.Menu" useGeneratedKeys="true" keyProperty="menuId">
+        INSERT INTO <include refid="tb"></include>(<include refid="baseColumns"></include>)
+        VALUE (NULL,#{menuName},#{menuUrl},#{menuLevel},#{menuIcon},#{menuOrder})
+    </insert>
+
+    <update id="update" parameterType="com.chenyue.blog.entity.Menu" >
+        update <include refid="tb"/>
+        <set >
+            <if test="menuName != null" > menu_name = #{menuName},</if>
+            <if test="menuUrl != null" >menu_url = #{menuUrl},</if>
+            <if test="menuLevel != null" >menu_level = #{menuLevel},</if>
+            <if test="menuIcon != null" >menu_icon = #{menuIcon},</if>
+            <if test="menuOrder != null" >menu_order = #{menuOrder},</if>
+        </set>
+        where menu_id = #{menuId}
+    </update>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        DELETE FROM <include refid="tb"></include> WHERE menu_id = #{value}
+    </delete>
+
+    <select id="getMenuById" resultType="com.chenyue.blog.entity.Menu" parameterType="integer">
+        SELECT <include refid="baseColumns"></include> FROM <include refid="tb"></include>
+        WHERE menu_id = #{menuId}
+    </select>
+    <select id="listMenu" resultType="com.chenyue.blog.entity.Menu">
+        SELECT <include refid="baseColumns"></include> FROM <include refid="tb"></include>
+        ORDER BY menu_order DESC, menu_id ASC
+    </select>
 </mapper>

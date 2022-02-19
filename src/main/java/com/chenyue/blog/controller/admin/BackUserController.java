@@ -20,7 +20,7 @@ import java.util.HashMap;
  */
 @Controller
 @RequestMapping("/admin/user")
-public class UserController {
+public class BackUserController {
 
     @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)

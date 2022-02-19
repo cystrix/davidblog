@@ -2,6 +2,7 @@ package com.chenyue.blog.entity;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -14,8 +15,8 @@ public class Notice {
     private Integer noticeId;
     private String noticeTitle;
     private String noticeContent;
-    private Date noticeCreateTime;
-    private Date noticeUpdateTime;
+    private LocalDateTime noticeCreateTime;
+    private LocalDateTime noticeUpdateTime;
     private Integer noticeOrder;
     private Integer noticeStatus;
 }

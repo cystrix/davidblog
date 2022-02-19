@@ -3,5 +3,59 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.chenyue.blog.dao.LinkDao">
+    <sql id="tb">link</sql>
+    <sql id="baseColumns">
+        link_id,link_url,link_name,link_image,link_description,link_owner_nickname,
+        link_owner_contact,link_update_time,link_create_time,link_order,link_status
+    </sql>
 
+    <insert id="insert" parameterType="com.chenyue.blog.entity.Link" useGeneratedKeys="true" keyProperty="linkId">
+        INSERT INTO <include refid="tb"></include> (<include refid="baseColumns"></include>)
+        VALUES (NULL,#{linkUrl},#{linkImage},#{linkOwnerNickname},#{linkOwnerContact},#{linkUpdateTime},
+            #{linkCreateTime},#{linkOrder},#{linkStatus})
+    </insert>
+
+    <update id="update" parameterType="link">
+        update <include refid="tb"></include>
+        <set>
+            <if test="linkUrl != null">link_url = #{linkUrl},</if>
+            <if test="linkName != null">link_name = #{linkName},</if>
+            <if test="linkImage != null">link_image = #{linkImage},</if>
+            <if test="linkDescription != null">link_description = #{linkDescription},</if>
+            <if test="linkOwnerNickname != null">link_nickname = #{linkOwnerNickname},</if>
+            <if test="linkOwnerContact != null">link_contact = #{linkOwnerContact},</if>
+            <if test="linkUpdateTime != null">link_update_time = #{linkUpdateTime},</if>
+            <if test="linkCreateTime != null">link_create_time = #{linkCreateTime},</if>
+            <if test="linkOrder != null">link_order = #{linkOrder},</if>
+            <if test="linkStatus != null">link_status = #{linkStatus},</if>
+        </set>
+        WHERE link_id = #{linkId}
+    </update>
+
+    <delete id="deleteById" parameterType="integer">
+        DELETE FROM <include refid="tb"></include> WHERE link_id = #{value}
+    </delete>
+
+    <select id="getLinkById" parameterType="integer" resultType="link">
+        SELECT <include refid="baseColumns"></include> FROM <include refid="tb"></include>
+        WHERE link_id = #{value}
+    </select>
+
+    <select id="countLink" parameterType="com.chenyue.blog.entity.Link" resultType="integer">
+        SELECT COUNT(*) FROM <include refid="tb"></include>
+        <where>
+            <if test="status != null">
+                link_status = #{status}
+            </if>
+        </where>
+    </select>
+
+    <select id="listLink" resultType="link">
+        SELECT <include refid="baseColumns"></include> FROM <include refid="tb"></include>
+        <where>
+            <if test="status != null">
+                link_status = #{status}
+            </if>
+        </where>
+    </select>
 </mapper>

@@ -5,7 +5,7 @@
 <mapper namespace="com.chenyue.blog.dao.TagDao">
     <sql id="tb">tag</sql>
     <sql id="baseColumns">tag_id,tag_name,tag_description</sql>
-    <insert id="insert" parameterType="com.chenyue.blog.entity.Tag" keyProperty="tag_id" useGeneratedKeys="true">
+    <insert id="insert" parameterType="com.chenyue.blog.entity.Tag" keyProperty="tagId" useGeneratedKeys="true">
         INSERT INTO tag(tag_name,tag_description) VALUE (#{tagName},#{tagDescription})
     </insert>
     <insert id="update" parameterType="com.chenyue.blog.entity.Tag">
@@ -31,7 +31,7 @@
     <select id="countTag" resultType="integer">
         SELECT COUNT(*) FROM tag
     </select>
-    <select id="listAllTag" parameterType="integer" resultType="com.chenyue.blog.entity.Tag">
+    <select id="listTag" parameterType="integer" resultType="com.chenyue.blog.entity.Tag">
         SELECT * FROM tag
     </select>
 </mapper>

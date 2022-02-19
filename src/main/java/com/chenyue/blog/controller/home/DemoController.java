@@ -21,6 +21,7 @@ public class DemoController {
     @ResponseBody
     @RequestMapping("/index")
     public ResponseVo index(){
+        // userService.testTransactional();
         return new ResponseVo(200, "SUCCESS","欢迎");
     }
 
