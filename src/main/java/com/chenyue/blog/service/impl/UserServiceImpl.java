@@ -58,7 +58,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int insert(User user) {
-
         user.setUserRegisterTime(LocalDateTime.now());
         return userDao.insert(user);
     }
@@ -80,9 +79,9 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(rollbackFor = {BusinessException.class})
     public void testTransactional() {
-        System.out.println("开始执行业务代码");
+      /*  System.out.println("开始执行业务代码");
         Tag tag = new Tag(null, "C--", "C--描述");
-        tagDao.insert(tag);
+        tagDao.insert(tag);*/
         // throw new BusinessException("业务代码从错误");  /*测试回滚*/
     }
 }

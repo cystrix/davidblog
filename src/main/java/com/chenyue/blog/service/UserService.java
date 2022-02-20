@@ -14,26 +14,12 @@ public interface UserService {
      */
     List<User> listUser();
 
-    /**
-     * 根据id查询用户信息
-     * @param id
-     * @return
-     */
     User getUserById(Integer id);
 
-    /**
-     * 更新一个用户
-     * @param user
-     */
     void update(User user);
 
     void deleteById(Integer id);
 
-    /**
-     * 添加一个用户
-     * @param user
-     * @return 影响的行数
-     */
     int insert(User user);
 
     /**
@@ -42,7 +28,6 @@ public interface UserService {
      * @return
      */
     User getUserByNameOrEmail(String str);
-
 
     User getUserByName(String name);
 

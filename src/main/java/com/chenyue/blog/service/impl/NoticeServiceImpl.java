@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author chenyue7@foxmail.com
  * @date 2022/2/18
@@ -21,8 +23,23 @@ public class NoticeServiceImpl implements NoticeService {
     NoticeDao noticeDao;
 
     @Override
+    public List<Notice> listNotice(Integer status) {
+        return noticeDao.listNotice(status);
+    }
+
+    @Override
     public void insertNotice(Notice notice) {
         noticeDao.insert(notice);
+    }
+
+    @Override
+    public void updateNotice(Notice notice) {
+        noticeDao.update(notice);
+    }
+
+    @Override
+    public void deleteNotice(Integer id) {
+        noticeDao.deleteById(id);
     }
 
     @Override

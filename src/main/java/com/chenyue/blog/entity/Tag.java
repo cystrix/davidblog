@@ -11,4 +11,7 @@ public class Tag {
     private Integer tagId;
     private String tagName;
     private String tagDescription;
+
+    /*non-database field*/
+    private Integer articleCount;
 }

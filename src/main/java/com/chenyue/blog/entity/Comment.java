@@ -15,6 +15,7 @@ public class Comment {
     private Integer commentId;
     private Integer commentPid;
     private String commentPname;
+    private Integer commentArticleId;
     private String commentAuthorName;
     private String commentAuthorEmail;
     private String commentAuthorUrl;
@@ -24,4 +25,7 @@ public class Comment {
     private String commentIp;
     private LocalDateTime commentCreateTime;
     private Integer commentRole;
+
+    /*non-database field*/
+    private Article article;
 }
