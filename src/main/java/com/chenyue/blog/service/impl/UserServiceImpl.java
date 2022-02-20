@@ -1,25 +1,82 @@
 package com.chenyue.blog.service.impl;
 
+import com.chenyue.blog.dao.ArticleDao;
 import com.chenyue.blog.dao.TagDao;
 import com.chenyue.blog.dao.UserDao;
 import com.chenyue.blog.entity.Tag;
+import com.chenyue.blog.entity.User;
 import com.chenyue.blog.exception.BusinessException;
 import com.chenyue.blog.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
-@Slf4j
+
 @Service
 public class UserServiceImpl implements UserService {
-    @Autowired
-    UserDao userDao;
-    @Autowired
-    TagDao tagDao;
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
+    @Autowired
+    private UserDao userDao;
+    @Autowired
+    private TagDao tagDao;
+    @Autowired
+    private ArticleDao articleDao;
+
+
+    @Override
+    public List<User> listUser() {
+        List<User> users = userDao.listUser();
+        if (users != null && users.size() > 0) {
+            for (User user : users) {
+                user.setArticleCount(null);
+            }
+        }
+        return users;
+    }
+
+    @Override
+    public User getUserById(Integer id) {
+        return userDao.getUserById(id);
+    }
+
+    @Override
+    public void update(User user) {
+        userDao.update(user);
+    }
+
+    @Override
+    public void deleteById(Integer id) {
+        userDao.deleteById(id);
+    }
+
+    @Override
+    public int insert(User user) {
+
+        user.setUserRegisterTime(LocalDateTime.now());
+        return userDao.insert(user);
+    }
+
+    @Override
+    public User getUserByNameOrEmail(String str) {
+        return userDao.getUserByNameOrEmail(str);
+    }
+
+    @Override
+    public User getUserByName(String name) {
+        return userDao.getUserByName(name);
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return userDao.getUserByEmail(email);
+    }
 
     @Transactional(rollbackFor = {BusinessException.class})
     public void testTransactional() {

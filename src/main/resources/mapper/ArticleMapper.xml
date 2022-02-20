@@ -4,33 +4,166 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.chenyue.blog.dao.ArticleDao">
     <sql id="tb">article</sql>
-    <sql id="baseColumns">article, article_user_id,</sql>
-    <insert id="insert" parameterType="com.chenyue.blog.entity.Article" useGeneratedKeys="true" keyProperty="id" >
+    <sql id="baseColumns">
+        article_id,
+        article_user_id,
+        article_title,
+        article_content,
+        article_view_count,
+        article_comment_count,
+        article_like_count,
+        article_is_comment,
+        article_status,
+        article_order,
+        article_create_time,
+        article_update_time,
+        article_summary
+    </sql>
+    <insert id="insert" parameterType="com.chenyue.blog.entity.Article" useGeneratedKeys="true" keyProperty="articleId" >
+        INSERT INTO <include refid="tb"/>
+            VALUES (NULL, #{articleUserId},#{articleTitle},
+            #{articleContent},#{articleCommentCount},#{articleLikeCount},
+            #{articleIsComment},#{articleStatus},#{articleOrder},#{articleCreateTime},
+            #{articleUpdateTime},#{articleSummary})
     </insert>
-    <!--<update id="update" parameterType="com.chenyue.entity.User">
-        UPDATE <include refid="tb"/>
+
+    <delete id="deleteById" parameterType="integer">
+        DELETE FROM <include refid="tb"/> WHERE article_id = #{value}
+    </delete>
+
+    <update id="update" parameterType="com.chenyue.blog.entity.Article">
+        UPDATE <include refid="tb"></include>
         <set>
-            <if test="username != null and username.length() > 0">
-                username = #{username},
-            </if>
-            <if test="password != null and password.length() > 0">
-                password = #{password},
-            </if>
-            <if test="email != null and email.length() > 0">
-                email = #{email},
-            </if>
-            <if test="birthday != null">
-                birthday = #{birthday},
-            </if>
-            <if test="gender != null">
-                gender = #{gender}
-            </if>
+            <if test="articleUserId != null">article_user_id = #{articleUserId},</if>
+            <if test="articleTitle != null">article_title = #{articleTitle},</if>
+            <if test="articleViewCount != null">article_view_count = #{articleViewCount},</if>
+            <if test="articleLikeCount != null">article_like_count = #{articleLikeCount},</if>
+            <if test="articleCommentCount != null">article_comment_count = #{articleCommentCount},</if>
+            <if test="articleCreateTime != null">article_create_time = #{articleCreateTime},</if>
+            <if test="articleUpdateTime != null">article_update_time = #{articleUpdateTime},</if>
+            <if test="articleIsComment != null">article_is_comment = #{articleIsComment},</if>
+            <if test="articleStatus != null">article_status = #{articleStatus},</if>
+            <if test="articleOrder != null">article_order = #{articleOrder},</if>
+            <if test="articleContent != null">article_content = #{articleContent},</if>
+            <if test="articleSummary != null">article_summary = #{articleSummary},</if>
         </set>
-        WHERE id = #{id}
-    </update>-->
+        WHERE article_id = #{articleId}
+    </update>
 
-    <!--  <update id="deleteById" parameterType="int">
-          UPDATE  <include refid="tb"/> SET is_delete = 1 WHERE id = #{id}
-      </update>-->
+    <select id="findAll" parameterType="com.chenyue.blog.query.ArticleQuery" resultType="com.chenyue.blog.entity.Article">
+        SELECT a.*
+        FROM article AS a
+        <where>
+            <if test="status != null">
+                a.article_status = #{status} AND
+            </if>
+            <if test="keywords != null">
+                a.article_title LIKE concat('%', #{keywords}, '%') AND
+            </if>
+            <if test="userId != null">
+                 a.article_user_id = #{userId} AND
+            </if>
+            <if test="categoryId != null">
+                a.article_id IN (
+                SELECT ac.article_id FROM article_category AS ac
+                WHERE ac.category_id = #{categoryId}
+                ) AND
+            </if>
+            <if test="tagId != null">
+                a.article_id IN (
+                SELECT at.article_id FROM article_tag AS at
+                WHERE at.tag_id = #{tagId}
+                )
+            </if>
+        </where>
+        ORDER BY a.article_order DESC, a.article_id DESC
+    </select>
 
+    <select id="getArticleByCategoryIds" parameterType="list" resultType="com.chenyue.blog.entity.Article">
+        SELECT a.*
+        FROM article AS a
+        JOIN article_category ac ON a.article_id = ac.article_id
+        WHERE ac.category_id IN <foreach open="(" close=")" separator="," collection="categoryIds" item="id">#{id}</foreach>
+
+    </select>
+
+    <select id="listArticleByLimit" parameterType="integer" resultType="com.chenyue.blog.entity.Article">
+        SELECT <include refid="baseColumns"></include> FROM <include refid="tb"></include>
+        ORDER BY article_id DESC LIMIT #{value}
+    </select>
+
+    <select id="listAllNotWithContent" resultType="com.chenyue.blog.entity.Article">
+        SELECT article_id,article_user_id,article_title, article_create_time,article_update_time
+        FROM <include refid="tb"></include>
+        WHERE article_status = 1 ORDER BY article_id DESC
+    </select>
+    <select id="countArticle" resultType="integer" parameterType="integer">
+        SELECT COUNT(*) FROM <include refid="tb"></include> WHERE article_status = #{status}
+    </select>
+
+    <select id="countArticleComment" resultType="integer">
+        SELECT SUM(article_comment_count) FROM <include refid="tb"></include> WHERE article_status = 1
+    </select>
+
+    <select id="listArticle" resultType="com.chenyue.blog.entity.Article">
+        SELECT <include refid="baseColumns"></include> FROM <include refid="tb"></include>
+        WHERE article_status = 1
+        ORDER BY article_status ASC, article_order DESC, article_id DESC
+    </select>
+
+    <select id="getArticleByStatusAndId"  resultType="com.chenyue.blog.entity.Article">
+        SELECT <include refid="baseColumns"></include> FROM <include refid="tb"></include>
+        WHERE article_id = #{id} AND article_status = #{status}
+    </select>
+
+    <select id="getPreviousArticle" parameterType="integer" resultType="com.chenyue.blog.entity.Article">
+        SELECT <include refid="baseColumns"></include> FROM <include refid="tb"></include>
+        WHERE article_id &gt; #{id} AND article_status > 1
+        ORDER BY article_id LIMIT 1
+    </select>
+
+    <select id="getAfterArticle" parameterType="integer" resultType="com.chenyue.blog.entity.Article">
+        SELECT <include refid="baseColumns"></include> FROM <include refid="tb"></include>
+        WHERE article_id > #{id} AND article_status > 1
+        ORDER BY article_id LIMIT 1
+    </select>
+
+    <select id="listArticleByCommentCount"  parameterType="integer" resultType="com.chenyue.blog.entity.Article">
+        SELECT <include refid="baseColumns"></include> FROM <include refid="tb"></include>
+        WHERE article_status = 1
+        ORDER BY article_comment_count1 DESC, article_order DESC, article_id DECS
+        LIMIT #{limit}
+    </select>
+
+    <update id="updateCommentCount" parameterType="integer">
+        UPDATE <include refid="tb"></include>
+        SET article_comment_count = (SELECT COUNT(*) FROM `comment` WHERE article.article_id = `comment`.comment_article_id)
+        WHERE article_id = #{article_id}
+    </update>
+
+    <select id="getLastUpdateArticle" resultType="com.chenyue.blog.entity.Article">
+        SELECT <include refid="baseColumns"></include> FROM <include refid="tb"></include>
+        WHERE article_status = 1
+        ORDER BY article_comment_count DESC, article_order DESC, article_id DESC
+        LIMIT #{limit}
+    </select>
+
+    <select id="countArticleByUserId" parameterType="integer" resultType="integer">
+        SELECT COUNT(*) FROM <include refid="tb"></include> WHERE article_user_id = #{value}
+    </select>
+
+    <select id="getArticleByCategoryId"parameterType="integer" resultType="com.chenyue.blog.entity.Article" >
+        SELECT <include refid="baseColumns"></include> FROM article AS a, article_category AS ac
+        WHERE a.article_status = 1 AND a.article_id = ac.article_id AND ac.category_id = #{categoryId} LIMIT #{limit}
+    </select>
+
+    <delete id="deleteBatch" parameterType="list">
+        DELETE FROM <include refid="tb"></include>
+        <if test="ids != null">
+            WHERE article_id IN
+            <foreach collection="ids" open="(" close=")" separator="," item="id">
+                #{id}
+            </foreach>
+        </if>
+    </delete>
 </mapper>

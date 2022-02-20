@@ -23,11 +23,11 @@ public class JwtUtils {
         JWTCreator.Builder builder = JWT.create();
         for (Map.Entry<String, Object> entry:
                 claims.entrySet()){
-            builder.withClaim(entry.getKey(), entry.getKey());
+            builder.withClaim(entry.getKey(), entry.getValue().toString());
         }
 
         Calendar instance = Calendar.getInstance();
-        instance.add(Calendar.MINUTE, 10);
+        instance.add(Calendar.MINUTE, 15);
         builder.withExpiresAt(instance.getTime());
         return builder.sign(Algorithm.HMAC256(SECRET));
     }
@@ -36,22 +36,15 @@ public class JwtUtils {
         JWTCreator.Builder builder = JWT.create();
         for (Map.Entry<String, Object> entry:
                 claims.entrySet()){
-            builder.withClaim(entry.getKey(), entry.getKey());
+            builder.withClaim(entry.getKey(), entry.getValue().toString());
         }
         builder.withExpiresAt(expireTime);
-        Calendar instance = Calendar.getInstance();
-        instance.add(Calendar.MINUTE, 10);
-        builder.withExpiresAt(instance.getTime()); // token十分钟过期
         return builder.sign(Algorithm.HMAC256(SECRET));
     }
 
 
-    public static void verify(String token){
+    public static DecodedJWT verify(String token){
         log.info("-----------------验证token正常---------------");
-        JWT.require(Algorithm.HMAC256(SECRET)).build().verify(token);
-    }
-
-    public static DecodedJWT getPayloadFromToken(String token){
         return JWT.require(Algorithm.HMAC256(SECRET)).build().verify(token);
     }
 }

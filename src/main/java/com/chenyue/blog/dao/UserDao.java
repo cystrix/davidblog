@@ -13,7 +13,7 @@ public interface UserDao {
     User getUserByNameOrEmail(String str);
     int deleteById(Integer userId);
     List<User> listUser();
-    User getUserByName();
-    User getUserByEmail();
+    User getUserByName(String name);
+    User getUserByEmail(String email);
 
 }

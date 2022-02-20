@@ -18,4 +18,7 @@ public class User {
     private LocalDateTime userRegisterTime;
     private LocalDateTime userLastLoginTime;
     private Integer userStatus;
+
+    /*非数据库字段*/
+    private Integer articleCount;
 }
