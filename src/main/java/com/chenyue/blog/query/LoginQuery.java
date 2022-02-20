@@ -9,6 +9,6 @@ import lombok.Data;
  */
 @Data
 public class LoginQuery {
-    private String username;
+    private String account; // username or email
     private String password;
 }

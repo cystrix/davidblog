@@ -7,6 +7,7 @@ import com.chenyue.blog.entity.Tag;
 import com.chenyue.blog.entity.User;
 import com.chenyue.blog.exception.BusinessException;
 import com.chenyue.blog.service.UserService;
+import com.chenyue.blog.util.Md5Utils;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,8 @@ public class UserServiceImpl implements UserService {
     private TagDao tagDao;
     @Autowired
     private ArticleDao articleDao;
+    @Autowired
+    private Md5Utils md5Utils;
 
 
     @Override
@@ -59,6 +62,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public int insert(User user) {
         user.setUserRegisterTime(LocalDateTime.now());
+        String pwd = md5Utils.createPassword(user.getUserName(), user.getUserPass());
+        user.setUserPass(pwd);
         return userDao.insert(user);
     }
 

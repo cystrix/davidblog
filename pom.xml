@@ -38,6 +38,15 @@
             <version>3.10.3</version>
         </dependency>
 
+        <!--md5-->
+        <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.15</version>
+        </dependency>
+
+
 
         <!--servlet api-->
         <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->

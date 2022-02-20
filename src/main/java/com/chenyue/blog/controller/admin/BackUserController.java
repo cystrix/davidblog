@@ -1,11 +1,17 @@
 package com.chenyue.blog.controller.admin;
 
 import com.chenyue.blog.conf.jwt.JwtUtils;
+import com.chenyue.blog.entity.User;
 import com.chenyue.blog.enums.CodeEnum;
+import com.chenyue.blog.exception.PasswordErrorException;
+import com.chenyue.blog.exception.UsernameNotExistsException;
 import com.chenyue.blog.query.LoginQuery;
+import com.chenyue.blog.service.UserService;
+import com.chenyue.blog.util.Md5Utils;
 import com.chenyue.blog.vo.ResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,32 +33,27 @@ import java.util.Iterator;
 public class BackUserController {
     @Autowired
     HttpServletRequest request;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private Md5Utils md5Utils;
 
     @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseVo signin(@RequestBody LoginQuery account) {
-
-        //test
-        if("chenyue".equals(account.getUsername()) &&
-        "123".equals(account.getPassword())) {
-            HashMap<String, Object> map = new HashMap<>();
-            map.put("role", "admin");
-            map.put("userId", 1);
-            Calendar expireTime = Calendar.getInstance();
-            expireTime.add(Calendar.HOUR, 1);
-            String token = JwtUtils.createToken(map, expireTime.getTime());
-            return new ResponseVo<>(CodeEnum.OK.code, "登录成功", token);
-        }else if("zhumingyao".equals(account.getUsername()) &&
-                "123".equals(account.getPassword())){
-            HashMap<String, Object> map = new HashMap<>();
-            map.put("role", "user");
-            map.put("userId", 2);
-            Calendar expireTime = Calendar.getInstance();
-            expireTime.add(Calendar.HOUR, 1);
-            String token = JwtUtils.createToken(map, expireTime.getTime());
-            return new ResponseVo<>(CodeEnum.OK.code, "登录成功", token);
+        if (checkUsernameAndPassword(account)) {
+            return new ResponseVo<>(CodeEnum.OK.code, "登录成功");
         }
         return new ResponseVo<>(CodeEnum.OK.code, "登录失败，用户名密码错误");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public ResponseVo signup(@RequestBody User newUser) {
+        Assert.notNull(newUser.getUserName(), "username cannot be null");
+        Assert.notNull(newUser.getUserPass(), "password cannot be null");
+        userService.insert(newUser);
+        return new ResponseVo<>(CodeEnum.OK.code, "注册成功");
     }
 
     @ResponseBody
@@ -70,5 +71,17 @@ public class BackUserController {
             System.out.println(i.next());
         }*/
         return new ResponseVo<>(CodeEnum.OK.code, CodeEnum.OK.message, "当前用户id: "+ request.getAttribute("userId"));
+    }
+
+
+    private Boolean checkUsernameAndPassword(LoginQuery query) throws UsernameNotExistsException, PasswordErrorException {
+        User user = userService.getUserByNameOrEmail(query.getAccount());
+        if (user == null) {
+            throw new UsernameNotExistsException("user does not exist");
+        }
+        if (query.getPassword() == null) {
+            throw new PasswordErrorException("password does not exist");
+        }
+        return md5Utils.verifyPassword(query.getAccount(), query.getPassword());
     }
 }

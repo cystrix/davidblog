@@ -152,7 +152,7 @@
         SELECT COUNT(*) FROM <include refid="tb"></include> WHERE article_user_id = #{value}
     </select>
 
-    <select id="getArticleByCategoryId"parameterType="integer" resultType="com.chenyue.blog.entity.Article" >
+    <select id="getArticleByCategoryId" parameterType="integer" resultType="com.chenyue.blog.entity.Article" >
         SELECT <include refid="baseColumns"></include> FROM article AS a, article_category AS ac
         WHERE a.article_status = 1 AND a.article_id = ac.article_id AND ac.category_id = #{categoryId} LIMIT #{limit}
     </select>
