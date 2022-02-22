@@ -1,6 +1,7 @@
 package com.chenyue.blog.service;
 
 import com.chenyue.blog.entity.Article;
+import com.chenyue.blog.query.ArticleQuery;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +22,7 @@ public interface ArticleService {
 
     Integer countArticleByTagId(Integer tagId);
 
-    List<Article> listArticle(HashMap<String, Object> criteria);
+    List<Article> listArticle(ArticleQuery query);
 
     List<Article> listRecentArticle(Integer limit);
 
@@ -62,7 +63,7 @@ public interface ArticleService {
 
     Article getLastUpdateArticle();
 
-    Article listArticleByCategoryId(Integer categoryIds, Integer limit);
+    Article listArticleByCategoryId(Integer categoryId, Integer limit);
 
     List<Article> listArticleByCategoryIds(List<Integer> categoryIds, Integer limit);
 

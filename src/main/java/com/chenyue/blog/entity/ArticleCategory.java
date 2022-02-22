@@ -12,4 +12,9 @@ public class ArticleCategory {
     private Integer id;
     private Integer articleId;
     private Integer categoryId;
+
+    public ArticleCategory(Integer articleId, Integer categoryId) {
+        this.articleId = articleId;
+        this.categoryId = categoryId;
+    }
 }

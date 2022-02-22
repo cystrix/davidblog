@@ -47,7 +47,7 @@ public interface ArticleDao {
     /**
      * 获得最新更新的文章
      */
-    void getLastUpdateArticle();
+    Article getLastUpdateArticle();
 
     /**
      * 获得用户的文章数量
@@ -57,7 +57,7 @@ public interface ArticleDao {
     Integer countArticleByUserId(Integer userId);
 
     Article getArticleByCategoryId(@Param("categoryId") Integer categoryId,@Param("limit") Integer limit);
-    Article getArticleByCategoryIds(@Param("categoryIds") List<Integer> categoryIds, @Param("limit") Integer limit);
+    List<Article> getArticleByCategoryIds(@Param("categoryIds") List<Integer> categoryIds, @Param("limit") Integer limit);
     /**
      * 获得最新文章
      * @param limit

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -18,10 +19,16 @@ public class Article {
     private String articleContent;
     private String articleSummary;
     private Integer articleCommentCount;
+    private Integer articleViewCount;
     private Integer articleLikeCount;
     private Integer articleIsComment;
     private Integer articleOrder;
     private LocalDateTime articleCreateTime;
     private LocalDateTime articleUpdateTime;
     private Integer articleStatus;
+
+    /*non-database field*/
+    private User user;
+    private List<Category> categoryList;
+    private List<Tag> tagList;
 }

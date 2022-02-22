@@ -1,13 +1,22 @@
 package com.chenyue.blog.service.impl;
 
-import com.chenyue.blog.entity.Article;
+import com.chenyue.blog.dao.ArticleCategoryDao;
+import com.chenyue.blog.dao.ArticleDao;
+import com.chenyue.blog.dao.ArticleTagDao;
+import com.chenyue.blog.entity.*;
+import com.chenyue.blog.enums.ArticleCommentStatus;
+import com.chenyue.blog.query.ArticleQuery;
 import com.chenyue.blog.service.ArticleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author chenyue7@foxmail.com
@@ -18,118 +27,157 @@ import java.util.List;
 public class ArticleServiceImpl implements ArticleService {
     private static final Logger logger = LoggerFactory.getLogger(ArticleCategoryImpl.class);
 
+    @Autowired
+    private ArticleCategoryDao articleCategoryDao;
+    @Autowired
+    private ArticleDao articleDao;
+    @Autowired
+    private ArticleTagDao articleTagDao;
+
+
     @Override
     public Integer countArticle(Integer status) {
-        return null;
+        return articleDao.countArticle(status);
     }
 
     @Override
     public Integer countArticleComment() {
-        return null;
+        return articleDao.countArticleComment();
     }
 
     @Override
     public Integer countArticleView() {
-        return null;
+        return articleDao.countArticleView();
     }
 
     @Override
     public Integer countArticleByCategoryId(Integer categoryId) {
-        return null;
+        return articleCategoryDao.countArticleByCategoryId(categoryId);
     }
 
     @Override
     public Integer countArticleByTagId(Integer tagId) {
-        return null;
+        return articleTagDao.countArticleByTagId(tagId);
     }
 
     @Override
-    public List<Article> listArticle(HashMap<String, Object> criteria) {
-        return null;
+    public List<Article> listArticle(ArticleQuery query) {
+        return articleDao.findAll(query);
     }
 
     @Override
     public List<Article> listRecentArticle(Integer limit) {
-        return null;
+        return articleDao.listArticleByLimit(limit);
     }
 
     @Override
     public void update(Article article) {
-
+        articleDao.update(article);
     }
 
     @Override
+    @Transactional(rollbackFor = {Exception.class})
     public void updateDetail(Article article) {
+        article.setArticleUpdateTime(LocalDateTime.now());
+        articleDao.update(article);
+        if (article.getTagList() != null) {
+            articleTagDao.deleteByArticleId(article.getArticleId());
+            for (int i = 0; i < article.getTagList().size(); i++) {
+                ArticleTag articleTag = new ArticleTag(article.getArticleId(), article.getTagList().get(i).getTagId());
+                articleTagDao.insert(articleTag);
+            }
+        }
 
+        if (article.getCategoryList() != null) {
+            articleCategoryDao.deleteByArticleId(article.getArticleId());
+            for (int i = 0; i < article.getCategoryList().size(); i++) {
+                ArticleCategory articleCategory = new ArticleCategory(article.getArticleId(), article.getCategoryList().get(i).getCategoryId());
+                articleCategoryDao.insert(articleCategory);
+            }
+        }
     }
 
     @Override
     public void deleteArticleBatch(List<Integer> ids) {
-
+        articleDao.deleteBatch(ids);
     }
 
     @Override
     public void deleteArticle(Integer id) {
-
+        articleDao.deleteById(id);
     }
 
     @Override
     public Article getArticleByStatusAndId(Integer status, Integer id) {
-        return null;
+        Article article = articleDao.getArticleByStatusAndId(status, id);
+        if (article != null) {
+            List<Category> categories = articleCategoryDao.listCategoryByArticleId(id);
+            List<Tag> tags = articleTagDao.listTagByArticleId(id);
+            article.setCategoryList(categories);
+            article.setTagList(tags);
+        }
+        return article;
     }
 
     @Override
     public List<Article> listArticleByViewCount(Integer limit) {
-        return null;
+        return articleDao.listArticleByViewCount(limit);
     }
 
     @Override
     public Article getAfterArticle(Integer id) {
-        return null;
+        return articleDao.getAfterArticle(id);
     }
 
     @Override
     public Article getPreArticle(Integer id) {
-        return null;
+        return articleDao.getPreviousArticle(id);
     }
 
     @Override
     public List<Article> listRandomArticle(Integer limit) {
-        return null;
+        return articleDao.listRandomArticle(limit);
     }
 
     @Override
     public List<Article> listArticleByCommentCount(Integer limit) {
-        return null;
+        return articleDao.listArticleByCommentCount(limit);
     }
 
     @Override
     public void insertArticle(Article article) {
-
+        article.setArticleCreateTime(LocalDateTime.now());
+        article.setArticleUpdateTime(LocalDateTime.now());
+        article.setArticleIsComment(ArticleCommentStatus.ALLOW.value);
+        article.setArticleViewCount(0);
+        article.setArticleCommentCount(0);
+        article.setArticleOrder(1);
+        article.setArticleCommentCount(0);
+        articleDao.insert(article);
     }
 
     @Override
     public void updateCommentCount(Integer articleId) {
-
+        articleDao.updateCommentCount(articleId);
     }
 
     @Override
     public Article getLastUpdateArticle() {
-        return null;
+        return articleDao.getLastUpdateArticle();
     }
 
     @Override
-    public Article listArticleByCategoryId(Integer categoryIds, Integer limit) {
-        return null;
+    public Article listArticleByCategoryId(Integer categoryId, Integer limit) {
+        return articleDao.getArticleByCategoryId(categoryId, limit);
     }
 
     @Override
     public List<Article> listArticleByCategoryIds(List<Integer> categoryIds, Integer limit) {
-        return null;
+        return articleDao.getArticleByCategoryIds(categoryIds, limit);
     }
 
     @Override
     public List<Integer> listCategoryIdByArticleId(Integer articleId) {
-        return null;
+        return articleCategoryDao.listCategoryIdByArticleId(articleId);
     }
 }
