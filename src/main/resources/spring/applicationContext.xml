@@ -63,6 +63,7 @@
             <mvc:mapping path="/admin/**"/>
             <mvc:exclude-mapping path="/admin/user/login"/>
             <mvc:exclude-mapping path="/admin/user/register"/>
+            <mvc:exclude-mapping path="/admin"/>
             <ref bean="tokenAuthInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>

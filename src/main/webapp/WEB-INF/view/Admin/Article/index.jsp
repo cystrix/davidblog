@@ -84,8 +84,7 @@
                             </c:choose>
                         </td>
                         <td>
-                            <fmt:parseDate value="${a.articleCreateTime}"  pattern="y-M-dd'T'H:m" var="myParseDate"/>
-                            <fmt:formatDate value="${myParseDate}"
+                            <fmt:formatDate value="${a.articleCreateTime}"
                                             pattern="yyyy-MM-dd HH:mm:ss"/>
                         </td>
                         <td>

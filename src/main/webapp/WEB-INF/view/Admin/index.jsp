@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="f" uri="http://localhost/fns" %>
 <%@ taglib prefix="rapid" uri="http://www.rapid-framework.org.cn/rapid" %>
 <rapid:override name="header-style">
     <style>
@@ -231,11 +232,8 @@
                         <div id="published-posts" class="activity-block"><h3>最近发布</h3> <br>
                             <ul>
                                 <c:forEach items="${articleList}" begin="0" end="4" step="1" var="a">
-                                    <fmt:parseDate value="${a.articleCreateTime}"  pattern="y-M-dd'T'H:m" var="myParseDate"/> <!-- localdatetime转化date-->
-                                    <li><span><fmt:formatDate value="${myParseDate}"
-                                                              pattern="HH:mm MM月dd日"/> </span>
-                                        <a href="/article/${a.articleId}"
-                                           target="_blank">${a.articleTitle}</a>
+                                    <li>
+                                        <a href="/article/${a.articleId}" target="_blank">${a.articleTitle}</a>
                                     </li>
                                 </c:forEach>
 

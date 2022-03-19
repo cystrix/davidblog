@@ -11,6 +11,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.TransactionManager;
 
 import javax.sql.DataSource;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 
 @Slf4j
 @ExtendWith(SpringExtension.class)
@@ -27,5 +29,12 @@ public class AppTest {
     void test01() {
         //System.out.println(dataSource);
         System.out.println(txManager);
+    }
+
+    @Test
+    void test02(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'k'hh:mm:ss");
+        LocalDateTime dateTime = LocalDateTime.now();
+
     }
 }
