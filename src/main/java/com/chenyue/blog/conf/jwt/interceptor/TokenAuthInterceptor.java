@@ -1,9 +1,8 @@
 package com.chenyue.blog.conf.jwt.interceptor;
 
-import com.auth0.jwt.interfaces.Claim;
+
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.chenyue.blog.conf.jwt.JwtUtils;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.util.Assert;
 import org.springframework.web.servlet.HandlerInterceptor;
 

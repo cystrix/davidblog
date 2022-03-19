@@ -18,7 +18,6 @@ public class Page {
     private LocalDateTime pageCreateTime;
     private LocalDateTime pageUpdateTime;
     private Integer pageViewCount;
-    private Integer pageCountCount;
     private Integer pageCommentCount;
     private Integer pageStatus;
 }

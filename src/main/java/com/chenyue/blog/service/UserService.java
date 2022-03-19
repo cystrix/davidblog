@@ -34,4 +34,8 @@ public interface UserService {
     User getUserByEmail(String email);
 
     void testTransactional();
+
+    boolean isUserExisted(String username);
+
+    boolean isUserEmailExisted(String email);
 }

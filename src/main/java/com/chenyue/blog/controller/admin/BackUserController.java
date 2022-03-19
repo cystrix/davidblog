@@ -12,16 +12,11 @@ import com.chenyue.blog.vo.ResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Calendar;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 
 /**
  * @author chenyue7@foxmail.com
@@ -37,6 +32,41 @@ public class BackUserController {
     private UserService userService;
     @Autowired
     private Md5Utils md5Utils;
+
+    @RequestMapping(value = "")
+    public ModelAndView userList() {
+        ModelAndView modelAndView = new ModelAndView();
+        List<User> users = userService.listUser();
+
+        modelAndView.addObject("userList", users);
+        modelAndView.setViewName("Admin/User/index");
+        return modelAndView;
+    }
+
+    @RequestMapping("/insert")
+    public ModelAndView insertView() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("Admin/User/insert");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/checkUserName")
+    @ResponseBody
+    public ResponseVo checkUserName(@RequestParam String username) {
+        if (userService.isUserExisted(username)) {
+            return new ResponseVo<>(CodeEnum.OK.code, "用户存在", true);
+        }
+        return new ResponseVo<>(CodeEnum.OK.code, "用户不存在", false);
+    }
+
+    @RequestMapping(value = "/checkUserEmail")
+    @ResponseBody
+    public ResponseVo checkUserEmail(@RequestParam Integer userId, @RequestParam String email) {
+        if (userService.isUserEmailExisted(email)) {
+            return new ResponseVo<>(CodeEnum.OK.code, "用户存在", true);
+        }
+        return new ResponseVo<>(CodeEnum.OK.code, "用户不存在", false);
+    }
 
     @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)

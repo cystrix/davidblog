@@ -18,5 +18,4 @@ public interface CategoryService {
     Category insertCategory(Category category);
     void updateCategory(Category category);
     Category getCategoryByName(String name);
-
 }

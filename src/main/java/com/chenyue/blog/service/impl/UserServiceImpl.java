@@ -89,4 +89,20 @@ public class UserServiceImpl implements UserService {
         tagDao.insert(tag);*/
         // throw new BusinessException("业务代码从错误");  /*测试回滚*/
     }
+
+    @Override
+    public boolean isUserExisted(String username) {
+        if (userDao.getUserByName(username) != null) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isUserEmailExisted(String email) {
+        if (userDao.getUserByEmail(email) != null) {
+            return true;
+        }
+        return false;
+    }
 }
