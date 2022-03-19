@@ -77,6 +77,7 @@ public class BackUserController {
         return new ResponseVo<>(CodeEnum.OK.code, "登录失败，用户名密码错误");
     }
 
+
     @ResponseBody
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ResponseVo signup(@RequestBody User newUser) {
