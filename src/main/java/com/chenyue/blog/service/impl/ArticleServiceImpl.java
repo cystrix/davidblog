@@ -5,6 +5,7 @@ import com.chenyue.blog.dao.ArticleDao;
 import com.chenyue.blog.dao.ArticleTagDao;
 import com.chenyue.blog.entity.*;
 import com.chenyue.blog.enums.ArticleCommentStatus;
+import com.chenyue.blog.enums.ArticleStatus;
 import com.chenyue.blog.query.ArticleQuery;
 import com.chenyue.blog.service.ArticleService;
 import com.github.pagehelper.PageHelper;
@@ -172,6 +173,7 @@ public class ArticleServiceImpl implements ArticleService {
         article.setArticleCommentCount(0);
         article.setArticleOrder(1);
         article.setArticleCommentCount(0);
+        article.setArticleStatus(ArticleStatus.PUBLISH.value);
         articleDao.insert(article);
     }
 

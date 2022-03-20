@@ -21,10 +21,19 @@
     </sql>
     <insert id="insert" parameterType="com.chenyue.blog.entity.Article" useGeneratedKeys="true" keyProperty="articleId" >
         INSERT INTO <include refid="tb"/>
-            VALUES (NULL, #{articleUserId},#{articleTitle},
-            #{articleContent},#{articleCommentCount},#{articleLikeCount},
-            #{articleIsComment},#{articleStatus},#{articleOrder},#{articleCreateTime},
-            #{articleUpdateTime},#{articleSummary})
+            VALUE (NULL
+            ,#{articleUserId}
+            ,#{articleTitle}
+            ,#{articleContent}
+            ,#{articleViewCount}
+            ,#{articleCommentCount}
+            ,#{articleLikeCount}
+            ,#{articleIsComment}
+            ,#{articleStatus}
+            ,#{articleOrder}
+            ,#{articleCreateTime}
+            ,#{articleUpdateTime}
+            ,#{articleSummary})
     </insert>
 
     <delete id="deleteById" parameterType="integer">

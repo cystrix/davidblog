@@ -84,8 +84,10 @@
                             </c:choose>
                         </td>
                         <td>
-                            <fmt:formatDate value="${a.articleCreateTime}"
-                                            pattern="yyyy-MM-dd HH:mm:ss"/>
+                            todo
+                           <%-- todo 2022/3/21 LocalDateTime显示问题 --%>
+                           <%-- <fmt:formatDate value="${a.articleCreateTime}"
+                                            pattern="yyyy-MM-dd HH:mm:ss"/>--%>
                         </td>
                         <td>
                             <a href="/admin/article/edit/${a.articleId}"

@@ -7,7 +7,7 @@
     <sql id="baseColumns">id,article_id,category_id</sql>
 
     <insert id="insert" parameterType="com.chenyue.blog.entity.ArticleCategory">
-        INSERTinclud<include refid="tb"/>(<include refid="baseColumns"/>) VALUE (NULL,#{articleId},#{categoryId})
+        INSERT INTO <include refid="tb"/>(<include refid="baseColumns"/>) VALUE (NULL,#{articleId},#{categoryId})
     </insert>
 
     <delete id="deleteByCategoryId" parameterType="integer">
