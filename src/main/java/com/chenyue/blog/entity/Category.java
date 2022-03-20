@@ -1,6 +1,8 @@
 package com.chenyue.blog.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author chenyue7@foxmail.com
@@ -8,6 +10,8 @@ import lombok.Data;
  * @description:
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Category {
     private Integer categoryId;
     private Integer categoryPid;

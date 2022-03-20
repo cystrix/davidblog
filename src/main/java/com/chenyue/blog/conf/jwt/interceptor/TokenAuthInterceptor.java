@@ -17,11 +17,11 @@ import javax.servlet.http.HttpServletResponse;
 public class TokenAuthInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String token = request.getHeader("Authorization");
+        /*String token = request.getHeader("Authorization");
         Assert.notNull(token, "token can't be null");
         DecodedJWT verifiedToken = JwtUtils.verify(token);
         String userId = verifiedToken.getClaim("userId").asString();
-        request.setAttribute("userId", userId);
+        request.setAttribute("userId", userId);*/
         return true;
     }
 }

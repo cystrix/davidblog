@@ -15,20 +15,20 @@ import java.nio.charset.StandardCharsets;
  */
 @Component
 public class Md5Utils {
+    private final String salt =  "1jsivcaxz23.*J%^21?!_#+";
 
     @Autowired
     private UserService userService;
 
-    public String createPassword(String account, String origin) {
-        String strWithSalt = origin + account;
+    public String createPassword(String originPass) {
+        String strWithSalt = originPass + salt;
         return DigestUtils.md5Hex(strWithSalt.getBytes(StandardCharsets.UTF_8));
     }
 
-    public Boolean verifyPassword(String account, String origin) {
-        String pwd = null;
-        Assert.notNull(account, "account cannot be null");
-        pwd = userService.getUserByNameOrEmail(account).getUserPass();
-        String strWithSalt =  origin + account;
-        return pwd.equals(DigestUtils.md5Hex(strWithSalt.getBytes(StandardCharsets.UTF_8)));
+    public Boolean verifyPassword(String originPass, String dbPass) {
+        String pwd = originPass + salt;
+        Assert.notNull(originPass, "account cannot be null");
+        pwd = DigestUtils.md5Hex(pwd.getBytes(StandardCharsets.UTF_8));
+        return pwd.equals(dbPass);
     }
 }

@@ -3,7 +3,7 @@ package com.chenyue.blog.controller.home;
 import com.chenyue.blog.enums.CodeEnum;
 import com.chenyue.blog.service.CategoryService;
 import com.chenyue.blog.service.UserService;
-import com.chenyue.blog.vo.ResponseVo;
+import com.chenyue.blog.vo.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -20,17 +20,20 @@ public class DemoController {
 
     @ResponseBody
     @RequestMapping("/index")
-    public ResponseVo index(){
+    public Response index(){
         // userService.testTransactional();
-        return new ResponseVo(200, "SUCCESS","欢迎");
+        return Response.OK();
     }
 
     @ResponseBody
     @RequestMapping("/getCategory")
-    public ResponseVo getCategory(@RequestParam("id") Integer id) {
+    public Response getCategory(@RequestParam("id") Integer id) {
         Assert.notNull(id, "参数不能空");
-        return new ResponseVo(CodeEnum.OK.code, CodeEnum.OK.message, categoryService.getCategoryById(id));
+        return Response.builder()
+                .code(CodeEnum.OK.code)
+                .msg( CodeEnum.OK.message)
+                .data(categoryService.getCategoryById(id))
+                .build();
     }
-
 
 }

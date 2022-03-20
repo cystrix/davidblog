@@ -50,33 +50,33 @@
         WHERE article_id = #{articleId}
     </update>
 
-    <select id="findAll" parameterType="com.chenyue.blog.query.ArticleQuery" resultType="com.chenyue.blog.entity.Article">
-        SELECT a.*
-        FROM article AS a
+    <select id="findAll" parameterType="hashmap" resultType="com.chenyue.blog.entity.Article">
+        SELECT article.*
+        FROM <include refid="tb"/>
         <where>
             <if test="status != null">
-                a.article_status = #{status} AND
+                article.article_status = #{status}
             </if>
             <if test="keywords != null">
-                a.article_title LIKE concat('%', #{keywords}, '%') AND
+                AND article.article_title LIKE concat('%', #{keywords},'%')
             </if>
             <if test="userId != null">
-                 a.article_user_id = #{userId} AND
+                AND article.article_user_id = #{userId}
             </if>
             <if test="categoryId != null">
-                a.article_id IN (
-                SELECT ac.article_id FROM article_category AS ac
-                WHERE ac.category_id = #{categoryId}
-                ) AND
+                AND article.article_id IN (
+                SELECT article_category.article_id FROM article_category
+                WHERE article_category.category_id = #{categoryId}
+                )
             </if>
             <if test="tagId != null">
-                a.article_id IN (
-                SELECT at.article_id FROM article_tag AS at
-                WHERE at.tag_id = #{tagId}
+                AND article.article_id IN (
+                SELECT article_tag.article_id FROM article_tag
+                WHERE article_tag.tag_id = #{tagId}
                 )
             </if>
         </where>
-        ORDER BY a.article_order DESC, a.article_id DESC
+        ORDER BY `article`.`article_order` DESC , `article`.`article_id` DESC
     </select>
 
     <select id="getArticleByCategoryIds" parameterType="list" resultType="com.chenyue.blog.entity.Article">
@@ -103,6 +103,11 @@
 
     <select id="countArticleComment" resultType="integer">
         SELECT SUM(article_comment_count) FROM <include refid="tb"></include> WHERE article_status = 1
+    </select>
+    
+    <select id="countArticleView" resultType="int" >
+        SELECT SUM(article_view_count)
+        FROm <include refid="tb"></include> WHERE article_status = 1
     </select>
 
     <select id="listArticle" resultType="com.chenyue.blog.entity.Article">

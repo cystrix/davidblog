@@ -14,7 +14,7 @@ public interface ArticleDao {
     Integer deleteById(Integer id);
     Integer update(Article article);
 
-    List<Article> findAll(ArticleQuery query);
+    List<Article> findAll(HashMap<String, Object> criteria);
     List<Article> listAllNotWithContent();
     Integer countArticle(Integer status);
 

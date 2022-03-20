@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Data
@@ -14,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Article {
     private Integer articleId;
-    private String articleUserId;
+    private Integer articleUserId;
     private String articleTitle;
     private String articleContent;
     private String articleSummary;

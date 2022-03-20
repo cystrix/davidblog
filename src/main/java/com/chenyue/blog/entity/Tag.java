@@ -12,6 +12,11 @@ public class Tag {
     private String tagName;
     private String tagDescription;
 
+
+    public Tag(Integer tagId){
+        this.tagId = tagId;
+    }
+
     /*non-database field*/
     private Integer articleCount;
 }

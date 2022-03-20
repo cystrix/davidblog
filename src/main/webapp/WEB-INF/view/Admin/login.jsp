@@ -134,11 +134,12 @@
                 data: $("#loginForm").serialize(),
                 dataType: "json",
                 success: function (data) {
-                    if(data.code==0) {
+                    // 返回json组成JavaScript对象
+
+                    if(data.code!=200) {
                         alert(data.msg);
                     } else {
                         window.location.href="/admin";
-
                     }
                 },
                 error: function () {

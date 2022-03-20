@@ -7,6 +7,8 @@ import com.chenyue.blog.entity.*;
 import com.chenyue.blog.enums.ArticleCommentStatus;
 import com.chenyue.blog.query.ArticleQuery;
 import com.chenyue.blog.service.ArticleService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,8 +64,8 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<Article> listArticle(ArticleQuery query) {
-        return articleDao.findAll(query);
+    public List<Article> listArticle(HashMap<String, Object> criteria) {
+        return articleDao.findAll(criteria);
     }
 
     @Override
@@ -132,6 +135,22 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Article getPreArticle(Integer id) {
         return articleDao.getPreviousArticle(id);
+    }
+
+    // todo 2022/3/20 HashMap 该改为query
+    @Override
+    public PageInfo<Article> pageArticle(Integer pageIndex, Integer pageSize, HashMap<String, Object> criteria) {
+        PageHelper.startPage(pageIndex, pageSize);
+        List<Article> articleList = articleDao.findAll(criteria);
+        for (Article article: articleList) {
+            List<Category> categories = articleCategoryDao.listCategoryByArticleId(article.getArticleId());
+            if (categories == null || categories.size() == 0) {
+                categories = new ArrayList<>();
+                categories.add(Category.defaultCategory());
+            }
+            article.setCategoryList(categories);
+        }
+        return new PageInfo<>(articleList);
     }
 
     @Override

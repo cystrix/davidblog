@@ -2,6 +2,7 @@ package com.chenyue.blog.service;
 
 import com.chenyue.blog.entity.Article;
 import com.chenyue.blog.query.ArticleQuery;
+import com.github.pagehelper.PageInfo;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +23,7 @@ public interface ArticleService {
 
     Integer countArticleByTagId(Integer tagId);
 
-    List<Article> listArticle(ArticleQuery query);
+    List<Article> listArticle(HashMap<String, Object> criteria);
 
     List<Article> listRecentArticle(Integer limit);
 
@@ -51,7 +52,7 @@ public interface ArticleService {
     Article getPreArticle(Integer id);
 
     // TODO 22/2/20 mybatis 分页插件
-    //PageInfo<Article> pageArticle(Integer pageIndex, Integer pageSize, HashMap<String, Object> criteria);
+    PageInfo<Article> pageArticle(Integer pageIndex, Integer pageSize, HashMap<String, Object> criteria);
 
     List<Article> listRandomArticle(Integer limit);
 

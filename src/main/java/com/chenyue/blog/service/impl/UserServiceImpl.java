@@ -32,7 +32,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private Md5Utils md5Utils;
 
-
     @Override
     public List<User> listUser() {
         List<User> users = userDao.listUser();
@@ -62,8 +61,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public int insert(User user) {
         user.setUserRegisterTime(LocalDateTime.now());
-        String pwd = md5Utils.createPassword(user.getUserName(), user.getUserPass());
+        String pwd = md5Utils.createPassword(user.getUserPass());
         user.setUserPass(pwd);
+        user.setUserStatus(1);
         return userDao.insert(user);
     }
 

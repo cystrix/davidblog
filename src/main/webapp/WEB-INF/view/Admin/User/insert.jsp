@@ -30,7 +30,7 @@
         </span>
     </blockquote>
     <br><br>
-    <form class="layui-form" action="/admin/user/insertSubmit" id="userForm"
+    <form class="layui-form" action="/admin/user/register" id="userForm"
           method="post">
         <div class="layui-form-item">
             <input type="hidden" id="userId" value="0">
