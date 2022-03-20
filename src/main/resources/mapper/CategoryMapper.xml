@@ -10,7 +10,7 @@
         SELECT <include refid="baseColumns"/> FROM <include refid="tb"/> WHERE category_id = #{value}
     </select>
 
-    <insert id="insert" parameterType="com.chenyue.blog.entity.Category" keyProperty="category_id" useGeneratedKeys="true">
+    <insert id="insert" parameterType="com.chenyue.blog.entity.Category" keyProperty="categoryId" useGeneratedKeys="true">
         INSERT INTO <include refid="tb"></include> (<include refid="baseColumns"></include>)
         VALUE(NULL, #{categoryPid},#{categoryName},#{categoryDescription},#{categoryOrder},#{categoryIcon})
     </insert>
@@ -18,11 +18,11 @@
         UPDATE
         <include refid="tb"></include>
         <set>
-            <if test="categoryPid != null">category_pid = #{categoryPid}</if>
-            <if test="categoryName != null">category_name = #{categoryName}</if>
-            <if test="categoryDescription != null">category_description = #{categoryDescription}</if>
-            <if test="categoryOrder != null">category_order = #{categoryOrder}</if>
-            <if test="categoryIcon != null">category_Icon = #{categoryIcon}</if>
+            <if test="categoryPid != null">category_pid = #{categoryPid},</if>
+            <if test="categoryName != null">category_name = #{categoryName},</if>
+            <if test="categoryDescription != null">category_description = #{categoryDescription},</if>
+            <if test="categoryOrder != null">category_order = #{categoryOrder},</if>
+            <if test="categoryIcon != null">category_icon = #{categoryIcon},</if>
         </set>
         WHERE category_id = #{categoryId}
     </update>

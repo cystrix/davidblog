@@ -17,7 +17,7 @@ public class Category {
     private Integer categoryPid;
     private String categoryName;
     private String categoryDescription;
-    private String categoryOrder;
+    private Integer categoryOrder;
     private String categoryIcon;
 
     /*non-database field*/

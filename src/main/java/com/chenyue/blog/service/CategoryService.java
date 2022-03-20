@@ -12,6 +12,11 @@ import java.util.List;
 public interface CategoryService {
     Integer countCategory();
     List<Category> listCategory();
+
+    /**
+     * 返回category并统计文章数量
+     * @return
+     */
     List<Category> listCategoryWithCount();
     void deleteCategory(Integer categoryId);
     Category getCategoryById(Integer id);
