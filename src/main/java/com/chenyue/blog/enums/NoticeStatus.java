@@ -8,8 +8,8 @@ package com.chenyue.blog.enums;
 public enum NoticeStatus {
     NORMAL(1,"显示"),
     HIDDEN(0,"隐藏");
-    private final Integer value;
-    private final String message;
+    public final Integer value;
+    public final String message;
     NoticeStatus(Integer value, String message) {
         this.value = value;
         this.message = message;

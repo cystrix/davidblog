@@ -22,8 +22,8 @@
             <if test="linkName != null">link_name = #{linkName},</if>
             <if test="linkImage != null">link_image = #{linkImage},</if>
             <if test="linkDescription != null">link_description = #{linkDescription},</if>
-            <if test="linkOwnerNickname != null">link_nickname = #{linkOwnerNickname},</if>
-            <if test="linkOwnerContact != null">link_contact = #{linkOwnerContact},</if>
+            <if test="linkOwnerNickname != null">link_owner_nickname = #{linkOwnerNickname},</if>
+            <if test="linkOwnerContact != null">link_owner_contact = #{linkOwnerContact},</if>
             <if test="linkUpdateTime != null">link_update_time = #{linkUpdateTime},</if>
             <if test="linkCreateTime != null">link_create_time = #{linkCreateTime},</if>
             <if test="linkOrder != null">link_order = #{linkOrder},</if>

@@ -67,8 +67,9 @@ public class BackLinkController {
     public ModelAndView editLinkView(@PathVariable("id") Integer id) {
         ModelAndView modelAndView = new ModelAndView();
 
-        Link linCustom = linkService.getLinkById(id);
+        Link linkCustom = linkService.getLinkById(id);
         List<Link> linkList = linkService.listLink(null);
+        modelAndView.addObject("linkCustom", linkCustom);
 
         modelAndView.addObject("linkList", linkList);
         modelAndView.setViewName("Admin/Link/edit");

@@ -66,7 +66,9 @@
                     ${l.linkOwnerContact}
                 </td>
                 <td>
-                      <fmt:formatDate value="${l.linkUpdateTime}" pattern="yyyy年MM月dd日"/>
+                    todo
+<%--                      <fmt:formatDate value="${l.linkUpdateTime}" pattern="yyyy年MM月dd日"/>--%>
+<%--                    todo 2020/3/22 时间显示问题--%>
                 </td>
                 <td>
                     ${l.linkOrder}
