@@ -29,7 +29,7 @@ import java.util.Map;
  */
 @Service
 public class ArticleServiceImpl implements ArticleService {
-    private static final Logger logger = LoggerFactory.getLogger(ArticleCategoryImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(ArticleServiceImpl.class);
 
     @Autowired
     private ArticleCategoryDao articleCategoryDao;
@@ -108,6 +108,8 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public void deleteArticle(Integer id) {
+        articleCategoryDao.deleteByArticleId(id);
+        articleTagDao.deleteByArticleId(id);
         articleDao.deleteById(id);
     }
 
@@ -164,6 +166,7 @@ public class ArticleServiceImpl implements ArticleService {
         return articleDao.listArticleByCommentCount(limit);
     }
 
+    @Transactional(rollbackFor = {Exception.class})
     @Override
     public void insertArticle(Article article) {
         article.setArticleCreateTime(LocalDateTime.now());
@@ -173,8 +176,29 @@ public class ArticleServiceImpl implements ArticleService {
         article.setArticleCommentCount(0);
         article.setArticleOrder(1);
         article.setArticleCommentCount(0);
+        article.setArticleLikeCount(0);
         article.setArticleStatus(ArticleStatus.PUBLISH.value);
         articleDao.insert(article);
+        //分类关联
+        for(int i = 0; i < article.getCategoryList().size(); i++) {
+            insertArticleCategory(new ArticleCategory(article.getArticleId(), article.getCategoryList().get(i).getCategoryId()));
+        }
+
+        for(int i = 0; i < article.getTagList().size(); i++) {
+            insertArticleTag(new ArticleTag(article.getArticleId(), article.getTagList().get(i).getTagId()));
+        }
+
+
+    }
+
+    @Override
+    public void insertArticleTag(ArticleTag articleTag) {
+        articleTagDao.insert(articleTag);
+    }
+
+    @Override
+    public void insertArticleCategory(ArticleCategory articleCategory) {
+        articleCategoryDao.insert(articleCategory);
     }
 
     @Override

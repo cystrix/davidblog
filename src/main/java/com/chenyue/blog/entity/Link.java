@@ -13,6 +13,7 @@ import java.util.Date;
 @Data
 public class Link {
     private Integer linkId;
+    private String linkUrl;
     private String linkName;
     private String linkImage;
     private String linkDescription;

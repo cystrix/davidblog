@@ -6,7 +6,7 @@
     <sql id="tb">article_category</sql>
     <sql id="baseColumns">id,article_id,category_id</sql>
 
-    <insert id="insert" parameterType="com.chenyue.blog.entity.ArticleCategory">
+    <insert id="insert" parameterType="com.chenyue.blog.entity.ArticleCategory" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO <include refid="tb"/>(<include refid="baseColumns"/>) VALUE (NULL,#{articleId},#{categoryId})
     </insert>
 

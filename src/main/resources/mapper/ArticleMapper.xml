@@ -20,7 +20,7 @@
         article_summary
     </sql>
     <insert id="insert" parameterType="com.chenyue.blog.entity.Article" useGeneratedKeys="true" keyProperty="articleId" >
-        INSERT INTO <include refid="tb"/>
+        INSERT INTO <include refid="tb"/>(<include refid="baseColumns"/>)
             VALUE (NULL
             ,#{articleUserId}
             ,#{articleTitle}

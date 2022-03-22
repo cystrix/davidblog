@@ -11,8 +11,8 @@
 
     <insert id="insert" parameterType="com.chenyue.blog.entity.Link" useGeneratedKeys="true" keyProperty="linkId">
         INSERT INTO <include refid="tb"></include> (<include refid="baseColumns"></include>)
-        VALUES (NULL,#{linkUrl},#{linkImage},#{linkOwnerNickname},#{linkOwnerContact},#{linkUpdateTime},
-            #{linkCreateTime},#{linkOrder},#{linkStatus})
+        VALUES (NULL,#{linkUrl},#{linkName},#{linkImage},#{linkDescription},#{linkOwnerNickname},#{linkOwnerContact}
+            ,#{linkUpdateTime},#{linkCreateTime},#{linkOrder},#{linkStatus})
     </insert>
 
     <update id="update" parameterType="link">

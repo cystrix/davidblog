@@ -5,14 +5,14 @@
 <mapper namespace="com.chenyue.blog.dao.ArticleTagDao">
     <sql id="tb">article_tag</sql>
     <sql id="baseColumns">id,article_id,tag_id</sql>
-    <insert id="insert" parameterType="com.chenyue.blog.entity.ArticleTag">
-        INSERT INTO <include refid="tb"/>(<include refid="baseColumns"/>) VALUE(NULL,#{articleId},#{categoryId})
+    <insert id="insert" parameterType="com.chenyue.blog.entity.ArticleTag" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO <include refid="tb"/>(<include refid="baseColumns"/>) VALUE(NULL,#{articleId},#{tagId})
     </insert>
     <delete id="deleteByTagId" parameterType="integer">
         DELETE FROM <include refid="tb"></include> WHERE tag_id = #{tagId}
     </delete>
     <delete id="deleteByArticleId" parameterType="integer">
-        DELETE FROM <include refid="baseColumns"/> WHERE article_id = #{articleId}
+        DELETE FROM <include refid="tb"/> WHERE article_id = #{articleId}
     </delete>
     <select id="countArticleByTagId" parameterType="integer" resultType="integer">
         SELECT COUNT(*) FROM <include refid="tb"/> WHERE tag_id = #{tagId}

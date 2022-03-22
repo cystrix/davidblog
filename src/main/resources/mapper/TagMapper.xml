@@ -12,12 +12,13 @@
         update tag
         <set>
             <if test="tagName != null and tagName.length() > 0">
-                tag_name = #{tagName}
+                tag_name = #{tagName},
             </if>
             <if test="tagDescription != null and tagDescription.length() > 0">
-                tag_description = #{tagDescription}
+                tag_description = #{tagDescription},
             </if>
         </set>
+        WHERE tag_id = #{tagId}
     </insert>
     <delete id="deleteById" parameterType="integer">
         DELETE FROM tag WHERE tag_id = #{tagId}

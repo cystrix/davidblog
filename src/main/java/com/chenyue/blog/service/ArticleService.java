@@ -1,7 +1,8 @@
 package com.chenyue.blog.service;
 
 import com.chenyue.blog.entity.Article;
-import com.chenyue.blog.query.ArticleQuery;
+import com.chenyue.blog.entity.ArticleCategory;
+import com.chenyue.blog.entity.ArticleTag;
 import com.github.pagehelper.PageInfo;
 
 import java.util.HashMap;
@@ -59,6 +60,10 @@ public interface ArticleService {
     List<Article> listArticleByCommentCount(Integer limit);
 
     void insertArticle(Article article);
+
+    void insertArticleTag(ArticleTag articleTag);
+
+    void insertArticleCategory(ArticleCategory articleCategory);
 
     void updateCommentCount(Integer articleId);
 

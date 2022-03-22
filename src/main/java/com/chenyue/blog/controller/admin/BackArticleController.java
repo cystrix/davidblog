@@ -5,6 +5,7 @@ import com.chenyue.blog.entity.Article;
 import com.chenyue.blog.entity.Category;
 import com.chenyue.blog.entity.Tag;
 import com.chenyue.blog.entity.User;
+import com.chenyue.blog.enums.ArticleStatus;
 import com.chenyue.blog.query.ArticleParam;
 import com.chenyue.blog.service.ArticleService;
 import com.chenyue.blog.service.CategoryService;
@@ -118,7 +119,8 @@ public class BackArticleController {
     public ModelAndView editArticleView(@PathVariable Integer id) {
         ModelAndView modelAndView = new ModelAndView();
 
-        Article  article = articleService.getArticleByStatusAndId(null, id);
+        Article  article = articleService.getArticleByStatusAndId(ArticleStatus.PUBLISH.value, id);
+        modelAndView.addObject("article", article);
         List<Category>  categoryList = categoryService.listCategory();
         modelAndView.addObject("categoryList", categoryList);
 
