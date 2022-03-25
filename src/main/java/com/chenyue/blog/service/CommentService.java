@@ -1,6 +1,7 @@
 package com.chenyue.blog.service;
 
 import com.chenyue.blog.entity.Comment;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public interface CommentService {
     List<Comment> listCommentByArticleId(Integer articleId);
     Comment getCommentById(Integer id);
     // TODO 22/2/20 安装mybatis page插件
-    //PageInfo<Comment> listCommentByPage(Integer pageIndex, Integer pageSize);
+    PageInfo<Comment> listCommentByPage(Integer pageIndex, Integer pageSize);
     List<Comment> listComment();
 
     void deleteCommentById(Integer id);

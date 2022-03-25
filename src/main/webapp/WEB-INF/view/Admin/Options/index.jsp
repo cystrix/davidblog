@@ -49,13 +49,13 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">站点描述</label>
                     <div class="layui-input-block">
-                        <input type="text" name="optionSiteDescrption"   value="${option.optionSiteDescrption}"   autocomplete="off" class="layui-input">
+                        <input type="text" name="optionSiteDescription"   value="${option.optionSiteDescription}"   autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">首页描述</label>
                     <div class="layui-input-block">
-                        <input type="text" name="optionMetaDescrption"  value="${option.optionMetaDescrption}"   autocomplete="off" class="layui-input">
+                        <input type="text" name="optionMetaDescription"  value="${option.optionMetaDescription}"   autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">

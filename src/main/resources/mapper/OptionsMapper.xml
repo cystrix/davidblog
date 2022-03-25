@@ -5,21 +5,29 @@
 <mapper namespace="com.chenyue.blog.dao.OptionsDao">
     <sql id="tb">options</sql>
     <sql id="baseColumns">
-        option_id,option_site_title,option_site_description, option_meta_description,option_meta_keyword,
-        option_aboutsite_avatar,option_aboutsite_content,option_aboutsite_content,option_aboutsite_github,
-        option_aboutsite_weibo,option_tongji,option_status
+        option_id,option_site_title,option_site_description, option_meta_description, option_meta_keyword,
+        option_aboutsite_avatar,option_aboutsite_title, option_aboutsite_content,
+        option_aboutsite_wechat,option_aboutsite_qq,option_aboutsite_github,option_aboutsite_weibo,
+        option_tongji,option_status
     </sql>
 
-    <insert id="insert" parameterType="options" useGeneratedKeys="true" keyProperty="options_id">
+    <insert id="insert" parameterType="com.chenyue.blog.entity.Options" useGeneratedKeys="true" keyProperty="optionId">
         INSERT INTO <include refid="tb"/>
         (<include refid="baseColumns"/>)
-        VALUE (NULL, #{optionSiteTitle},
-        #{optionSiteDescrption},
-        #{optionMetaDescrption}, #{optionMetaKeyword},
-        #{optionAboutsiteAvatar}, #{optionAboutsiteTitle},
-        #{optionAboutsiteContent}, #{optionAboutsiteWechat},
-        #{optionAboutsiteQq}, #{optionAboutsiteGithub},
-        #{optionAboutsiteWeibo}, #{optionTongji}, #{optionStatus}
+        VALUE (NULL,
+        #{optionSiteTitle},
+        #{optionSiteDescription},
+        #{optionMetaDescription},
+        #{optionMetaKeyword},
+        #{optionAboutsiteAvatar},
+        #{optionAboutsiteTitle},
+        #{optionAboutsiteContent},
+        #{optionAboutsiteWechat},
+        #{optionAboutsiteQq},
+        #{optionAboutsiteGithub},
+        #{optionAboutsiteWeibo},
+        #{optionTongji},
+        #{optionStatus}
         )
     </insert>
 
@@ -28,8 +36,8 @@
         <include refid="tb"/>
         <set>
             <if test="optionSiteTitle != null">option_site_title = #{optionSiteTitle},</if>
-            <if test="optionSiteDescrption != null">option_site_descrption = #{optionSiteDescrption},</if>
-            <if test="optionMetaDescrption != null">option_meta_descrption = #{optionMetaDescrption},</if>
+            <if test="optionSiteDescription != null">option_site_description = #{optionSiteDescription},</if>
+            <if test="optionMetaDescription != null">option_meta_description = #{optionMetaDescription},</if>
             <if test="optionMetaKeyword != null">option_meta_keyword = #{optionMetaKeyword},</if>
             <if test="optionAboutsiteAvatar != null">option_aboutsite_avatar = #{optionAboutsiteAvatar},</if>
             <if test="optionAboutsiteTitle != null">option_aboutsite_title = #{optionAboutsiteTitle},</if>

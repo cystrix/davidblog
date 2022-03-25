@@ -12,6 +12,7 @@ public class Options {
     private String optionSiteTitle;
     private String optionSiteDescription;
     private String optionMetaDescription;
+    private String optionMetaKeyword;
     private String optionAboutsiteAvatar;
     private String optionAboutsiteTitle;
     private String optionAboutsiteContent;
@@ -19,5 +20,6 @@ public class Options {
     private String optionAboutsiteQq;
     private String optionAboutsiteWeibo;
     private String optionAboutsiteGithub;
-    private String optionAboutsiteTongji;
+    private String optionTongji;
+    private Integer optionStatus;
 }

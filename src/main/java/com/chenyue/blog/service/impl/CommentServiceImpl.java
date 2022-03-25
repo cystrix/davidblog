@@ -6,6 +6,8 @@ import com.chenyue.blog.entity.Article;
 import com.chenyue.blog.entity.Comment;
 import com.chenyue.blog.enums.ArticleStatus;
 import com.chenyue.blog.service.CommentService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,6 +40,17 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Comment getCommentById(Integer id) {
         return commentDao.getCommentById(id);
+    }
+
+    @Override
+    public PageInfo<Comment> listCommentByPage(Integer pageIndex, Integer pageSize) {
+        PageHelper.startPage(pageIndex, pageSize);
+        List<Comment> commentList = commentDao.listComment();
+        for (int i  = 0; i < commentList.size(); i++) {
+            Article article = articleDao.getArticleByStatusAndId(ArticleStatus.PUBLISH.value, commentList.get(i).getCommentArticleId());
+            commentList.get(i).setArticle(article);
+        }
+        return new PageInfo<>(commentList);
     }
 
     @Override

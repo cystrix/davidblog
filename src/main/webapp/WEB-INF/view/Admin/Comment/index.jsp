@@ -1,6 +1,6 @@
 <%@ page import="java.security.MessageDigest" %>
 <%@ page import="java.security.NoSuchAlgorithmException" %>
-<%@ page import="com.liuyanzhao.ssm.blog.util.MyUtils" %>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -80,7 +80,8 @@
                            target="_blank">${c.article.articleTitle}</a>
                     </td>
                     <td>
-                        <fmt:formatDate value="${c.commentCreateTime}" pattern="yyyy年MM月dd日 HH:dd:ss"/>
+                        todo
+<%--                        <fmt:formatDate value="${c.commentCreateTime}" pattern="yyyy年MM月dd日 HH:dd:ss"/>--%>
                     </td>
                     <td>${c.commentId}</td>
 
