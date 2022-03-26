@@ -100,13 +100,15 @@ public class BackUserController {
     @RequestMapping("/edit/{id}")
     public ModelAndView editUserView(@PathVariable("id") Integer id) {
         ModelAndView modelAndView = new ModelAndView();
+
         User user = userService.getUserById(id);
         modelAndView.addObject("user", user);
+        modelAndView.setViewName("Admin/User/edit");
         return modelAndView;
     }
 
     @RequestMapping(value = "/editSubmit", method = RequestMethod.POST)
-    public String editSubmit(@RequestBody  User user) {
+    public String editSubmit(User user) {
         userService.update(user);
         return "redirect:/admin/user";
     }

@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import com.chenyue.blog.util.NetUtils;
@@ -83,7 +84,7 @@ public class AdminController {
                 httpServletResponse.addCookie(nameCookie);
                 httpServletResponse.addCookie(pwdCookie);
 
-                user.setUserLastLoginTime(LocalDateTime.now());
+                user.setUserLastLoginTime(new Date());
                 user.setUserLastLoginIp(NetUtils.getIpAddr(request));
                 userService.update(user);
             }

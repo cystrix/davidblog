@@ -91,7 +91,7 @@
     <select id="getArticleByCategoryIds" parameterType="list" resultType="com.chenyue.blog.entity.Article">
         SELECT a.*
         FROM article AS a
-        JOIN article_category ac ON a.article_id = ac.article_id
+        JOIN article_category AS ac ON a.article_id = ac.article_id
         WHERE ac.category_id IN <foreach open="(" close=")" separator="," collection="categoryIds" item="id">#{id}</foreach>
 
     </select>
@@ -130,6 +130,13 @@
         WHERE article_id = #{id} AND article_status = #{status}
     </select>
 
+    <select id="listArticleByViewCount" parameterType="integer" resultType="com.chenyue.blog.entity.Article">
+        SELECT <include refid="baseColumns"/>
+        FROM <include refid="tb"/>
+        ORDER BY article_view_count DESC
+        LIMIT #{value}
+    </select>
+
     <select id="getPreviousArticle" parameterType="integer" resultType="com.chenyue.blog.entity.Article">
         SELECT <include refid="baseColumns"></include> FROM <include refid="tb"></include>
         WHERE article_id &gt; #{id} AND article_status > 1
@@ -142,11 +149,18 @@
         ORDER BY article_id LIMIT 1
     </select>
 
+    <select id="listRandomArticle" parameterType="integer" resultType="com.chenyue.blog.entity.Article">
+        SELECT <include refid="baseColumns"/>
+        FROM <include refid="tb"/>
+        WHERE article_status = 1
+        ORDER BY RAND() LIMIT #{limit}
+    </select>
+
     <select id="listArticleByCommentCount"  parameterType="integer" resultType="com.chenyue.blog.entity.Article">
         SELECT <include refid="baseColumns"></include> FROM <include refid="tb"></include>
         WHERE article_status = 1
-        ORDER BY article_comment_count1 DESC, article_order DESC, article_id DECS
-        LIMIT #{limit}
+        ORDER BY article_comment_count DESC, article_order DESC, article_id DESC
+        LIMIT #{value}
     </select>
 
     <update id="updateCommentCount" parameterType="integer">

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 
@@ -60,7 +61,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int insert(User user) {
-        user.setUserRegisterTime(LocalDateTime.now());
+        user.setUserRegisterTime(new Date());
         String pwd = md5Utils.createPassword(user.getUserPass());
         user.setUserPass(pwd);
         user.setUserStatus(1);

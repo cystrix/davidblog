@@ -19,8 +19,8 @@ public class Link {
     private String linkDescription;
     private String linkOwnerNickname;
     private String linkOwnerContact;
-    private LocalDateTime linkCreateTime;
-    private LocalDateTime linkUpdateTime;
+    private Date linkCreateTime;
+    private Date linkUpdateTime;
     private Integer linkOrder;
     private Integer linkStatus;
 }

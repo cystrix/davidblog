@@ -36,6 +36,10 @@ public class IndexController {
     @Autowired
     private CommentService commentService;
 
+    @Autowired
+    private OptionsService optionsService;
+
+
 
     @RequestMapping(value = {"/", "/article"})
     public String index(@RequestParam(required = false, defaultValue = "1") Integer pageIndex,
@@ -54,9 +58,11 @@ public class IndexController {
         List<Link> linkList = linkService.listLink(LinkStatus.NORMAL.getValue());
         model.addAttribute("linkList", linkList);
 
+        model.addAttribute("allTagList", tagService.listTag());
         List<Comment> recentCommentList = commentService.listRecentComment(10);
         model.addAttribute("recentCommentList", recentCommentList);
         model.addAttribute("pageUrlPrefix", "/article?pageIndex");
+        //model.addAttribute("options", optionsService.getOptions());
         return "Home/index";
     }
 

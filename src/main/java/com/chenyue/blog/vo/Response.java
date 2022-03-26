@@ -8,7 +8,7 @@ public class Response{
     private Object data;
 
 
-    private Response(Integer code, String message, Object data) {
+    public Response(Integer code, String message, Object data) {
         this.code = code;
         this.msg = message;
         this.data = data;
@@ -38,10 +38,24 @@ public class Response{
         return data;
     }
 
-
     public static Response OK(){
         return new Response(CodeEnum.OK.code, CodeEnum.OK.message, null);
     }
+
+    public  static Response success(){
+        return new Response(1, "操作成功", null);
+    }
+
+    public static Response failed(){
+        return new Response(0, "操作失败", null);
+    }
+    public static Response failed(String data){
+        return new Response(0, "操作失败", data);
+    }
+    public static Response success(Object data){
+        return new Response(0, "操作成功", data);
+    }
+
 
     public static Builder builder(){
         return new Builder();

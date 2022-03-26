@@ -23,7 +23,7 @@ public class Comment {
     private String commentContent;
     private String commentAgent;
     private String commentIp;
-    private LocalDateTime commentCreateTime;
+    private Date commentCreateTime;
     private Integer commentRole;
 
     /*non-database field*/

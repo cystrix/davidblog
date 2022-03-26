@@ -15,8 +15,8 @@ public class Notice {
     private Integer noticeId;
     private String noticeTitle;
     private String noticeContent;
-    private LocalDateTime noticeCreateTime;
-    private LocalDateTime noticeUpdateTime;
+    private Date noticeCreateTime;
+    private Date noticeUpdateTime;
     private Integer noticeOrder;
     private Integer noticeStatus;
 }

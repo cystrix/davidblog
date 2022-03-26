@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -22,8 +23,8 @@ public class Article {
     private Integer articleLikeCount;
     private Integer articleIsComment;
     private Integer articleOrder;
-    private LocalDateTime articleCreateTime;
-    private LocalDateTime articleUpdateTime;
+    private Date articleCreateTime;
+    private Date articleUpdateTime;
     private Integer articleStatus;
 
     /*non-database field*/

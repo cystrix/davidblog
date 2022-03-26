@@ -17,10 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author chenyue7@foxmail.com
@@ -82,7 +79,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     @Transactional(rollbackFor = {Exception.class})
     public void updateDetail(Article article) {
-        article.setArticleUpdateTime(LocalDateTime.now());
+        article.setArticleUpdateTime(new Date());
         articleDao.update(article);
         if (article.getTagList() != null) {
             articleTagDao.deleteByArticleId(article.getArticleId());
@@ -169,8 +166,8 @@ public class ArticleServiceImpl implements ArticleService {
     @Transactional(rollbackFor = {Exception.class})
     @Override
     public void insertArticle(Article article) {
-        article.setArticleCreateTime(LocalDateTime.now());
-        article.setArticleUpdateTime(LocalDateTime.now());
+        article.setArticleCreateTime(new Date());
+        article.setArticleUpdateTime(new Date());
         article.setArticleIsComment(ArticleCommentStatus.ALLOW.value);
         article.setArticleViewCount(0);
         article.setArticleCommentCount(0);

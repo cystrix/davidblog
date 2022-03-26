@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,8 +41,8 @@ public class LinkController {
     @ResponseBody
     public void applyLinkSubmit(Link link){
         link.setLinkStatus(LinkStatus.HIDDEN.getValue());
-        link.setLinkCreateTime(LocalDateTime.now());
-        link.setLinkUpdateTime(LocalDateTime.now());
+        link.setLinkCreateTime(new Date());
+        link.setLinkUpdateTime(new Date());
         linkService.insertLink(link);
     }
 }

@@ -57,7 +57,11 @@ public class ArticleController {
 
         //相关文章
         List<Integer> categoryIds = articleService.listCategoryIdByArticleId(articleId);
-        List<Article> similarArticleList = articleService.listArticleByCategoryIds(categoryIds, 5);
+        List<Article> similarArticleList = null;
+        if(categoryIds.size()!=0) {
+            similarArticleList = articleService.listArticleByCategoryIds(categoryIds, 5);
+        }
+
         model.addAttribute("similarArticleList", similarArticleList);
 
         //猜你喜欢

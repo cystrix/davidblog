@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -39,8 +40,8 @@ public class BackNoticeController {
     @ResponseBody
     @RequestMapping(value = "/insertSubmit", method = RequestMethod.POST)
     public String insertNoticeSubmit(Notice notice) {
-        notice.setNoticeCreateTime(LocalDateTime.now());
-        notice.setNoticeUpdateTime(LocalDateTime.now());
+        notice.setNoticeCreateTime(new Date());
+        notice.setNoticeUpdateTime(new Date());
         notice.setNoticeStatus(NoticeStatus.NORMAL.value);
         notice.setNoticeOrder(1);
         noticeService.insertNotice(notice);
@@ -62,7 +63,7 @@ public class BackNoticeController {
 
     @RequestMapping("/editSubmit")
     public String editNoticeSubmit(Notice notice) {
-        notice.setNoticeUpdateTime(LocalDateTime.now());
+        notice.setNoticeUpdateTime(new Date());
         noticeService.updateNotice(notice);
         return "redirect:/admin/notice";
     }

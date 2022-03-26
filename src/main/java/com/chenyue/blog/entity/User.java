@@ -15,8 +15,8 @@ public class User {
     private String userUrl;
     private String userAvatar;
     private String userLastLoginIp;
-    private LocalDateTime userRegisterTime;
-    private LocalDateTime userLastLoginTime;
+    private Date userRegisterTime;
+    private Date userLastLoginTime;
     private Integer userStatus;
 
     /*非数据库字段*/

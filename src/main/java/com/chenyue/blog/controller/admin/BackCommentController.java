@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -44,7 +45,7 @@ public class BackCommentController {
     public void insertComment(HttpServletRequest request, Comment comment) {
         //添加评论
         comment.setCommentIp(NetUtils.getIpAddr(request));
-        comment.setCommentCreateTime(LocalDateTime.now());
+        comment.setCommentCreateTime(new Date());
         commentService.insert(comment);
         //更新文章的评论数
         Article article = articleService.getArticleByStatusAndId(null, comment.getCommentArticleId());
@@ -93,7 +94,7 @@ public class BackCommentController {
         article.setArticleCommentCount(article.getArticleCommentCount() + 1);
         articleService.update(article);
         //添加评论
-        comment.setCommentCreateTime(LocalDateTime.now());
+        comment.setCommentCreateTime(new Date());
         comment.setCommentIp(NetUtils.getIpAddr(request));
         commentService.insert(comment);
         return "redirect:/admin/comment";

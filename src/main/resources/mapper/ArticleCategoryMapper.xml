@@ -23,7 +23,7 @@
     </select>
 
     <select id="listCategoryIdByArticleId" parameterType="integer" resultType="integer">
-        SELECT category_id FROM <include refid="baseColumns"/> WHERE article_id = #{articleId}
+        SELECT category_id FROM <include refid="tb"/> WHERE article_id = #{articleId}
     </select>
 
     <select id="listArticleIdByCategoryId" parameterType="integer" resultType="integer">

@@ -18,14 +18,14 @@
     <meta name="HandheldFriendly" content="true"/>
     <link rel="shortcut icon" href="/img/logo.png">
     <rapid:block name="description">
-        <meta name="description" content="${options.optionMetaDescrption}"/>
+        <meta name="description" content="${options.optionMetaDescription}"/>
     </rapid:block>
     <rapid:block name="keywords">
         <meta name="keywords" content="${options.optionMetaKeyword}"/>
     </rapid:block>
     <rapid:block name="title">
         <title>
-                ${options.optionSiteTitle}-${options.optionSiteDescrption}
+                ${options.optionSiteTitle}-${options.optionSiteDescription}
         </title>
     </rapid:block>
     <link rel="stylesheet" href="/css/style.css">

@@ -3,6 +3,7 @@ package com.chenyue.blog.entity;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * @author chenyue7@foxmail.com
@@ -15,8 +16,8 @@ public class Page {
     private String pageKey;
     private String pageTitle;
     private String pageContent;
-    private LocalDateTime pageCreateTime;
-    private LocalDateTime pageUpdateTime;
+    private Date pageCreateTime;
+    private Date pageUpdateTime;
     private Integer pageViewCount;
     private Integer pageCommentCount;
     private Integer pageStatus;

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -50,8 +51,8 @@ public class BackLinkController {
 
     @RequestMapping(value = "/insertSubmit", method = RequestMethod.POST)
     public String insertLinkSubmit(Link link) {
-        link.setLinkCreateTime(LocalDateTime.now());
-        link.setLinkUpdateTime(LocalDateTime.now());
+        link.setLinkCreateTime(new Date());
+        link.setLinkUpdateTime(new Date());
         link.setLinkStatus(LinkStatus.NORMAL.value);
         linkService.insertLink(link);
         return "redirect:/admin/link/insert";
@@ -78,7 +79,7 @@ public class BackLinkController {
 
     @RequestMapping(value = "/editSubmit", method = RequestMethod.POST)
     public String editLinkSubmit(Link link) {
-        link.setLinkUpdateTime(LocalDateTime.now());
+        link.setLinkUpdateTime(new Date());
         linkService.updateLink(link);
         return "redirect:/admin/link";
     }

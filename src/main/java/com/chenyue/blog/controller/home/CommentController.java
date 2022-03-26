@@ -8,12 +8,13 @@ import com.chenyue.blog.enums.UserRole;
 import com.chenyue.blog.service.ArticleService;
 import com.chenyue.blog.service.CommentService;
 import com.chenyue.blog.util.NetUtils;
-import com.chenyue.blog.vo.JsonResult;
+import com.chenyue.blog.vo.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 
 /**
@@ -29,8 +30,8 @@ public class CommentController {
     private ArticleService articleService;
 
 
-    public JsonResult insertComment(HttpServletRequest request, Comment comment){
-        comment.setCommentCreateTime(LocalDateTime.now());
+    public Response insertComment(HttpServletRequest request, Comment comment){
+        comment.setCommentCreateTime(new Date());
         comment.setCommentIp(NetUtils.getIpAddr(request));
         if (request.getSession().getAttribute("user") != null){
             comment.setCommentRole(UserRole.OWNER.getValue());
@@ -50,9 +51,9 @@ public class CommentController {
             articleService.updateCommentCount(article.getArticleId());
         }catch (Exception e){
             e.printStackTrace();
-            return new JsonResult().failed();
+            return Response.failed();
         }
 
-        return new JsonResult().success();
+        return Response.success();
     }
 }
